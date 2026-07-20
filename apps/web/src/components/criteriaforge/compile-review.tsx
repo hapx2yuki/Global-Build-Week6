@@ -1,3 +1,4 @@
+import * as React from "react"
 import {
   Anvil,
   ArrowRight,
@@ -12,6 +13,8 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import type { UiLocale } from "@/lib/criteriaforge/ui-types"
 
@@ -41,14 +44,23 @@ const gates = [
 export function CompileReview({
   locale,
   approved,
+  calibrated = true,
+  compiled = false,
   onBack,
   onCompile,
+  onCalibrate,
+  onExport,
 }: {
   locale: UiLocale
   approved: boolean
+  calibrated?: boolean
+  compiled?: boolean
   onBack: () => void
   onCompile: () => void
+  onCalibrate?: () => void
+  onExport?: (repositoryRoot: string) => Promise<void>
 }) {
+  const [repositoryRoot, setRepositoryRoot] = React.useState("")
   const title =
     locale === "ja"
       ? "人間が承認した意味だけを、不可逆な版にする"
@@ -88,6 +100,17 @@ export function CompileReview({
             </AlertDescription>
           </Alert>
         )}
+        {approved && !calibrated && (
+          <Alert className="mt-7">
+            <ShieldCheck />
+            <AlertTitle>Three comparable calibration runs are required</AlertTitle>
+            <AlertDescription>
+              CriteriaForge sends the displayed criteria and ratified examples
+              only after a fresh confirmation. Material disagreement blocks
+              compilation.
+            </AlertDescription>
+          </Alert>
+        )}
 
         <section className="mt-7 overflow-hidden rounded-xl border bg-card">
           <div className="flex items-center justify-between border-b px-5 py-4">
@@ -100,17 +123,18 @@ export function CompileReview({
             <Badge
               variant="outline"
               className={
-                approved
+                approved && calibrated
                   ? "border-approved/25 bg-approved/8 text-approved-foreground"
                   : "border-destructive/25 bg-destructive/7 text-destructive"
               }
             >
-              {approved ? "5 / 5 pass" : "4 / 5 pass"}
+              {[true, approved, true, true, calibrated].filter(Boolean).length} / 5 pass
             </Badge>
           </div>
           <div className="divide-y">
             {gates.map((gate, index) => {
-              const passed = approved || index !== 1
+              const passed =
+                index === 1 ? approved : index === 4 ? calibrated : true
               return (
                 <div
                   key={gate.name}
@@ -166,6 +190,40 @@ export function CompileReview({
           })}
         </div>
 
+        {compiled && onExport && (
+          <section className="mt-7 rounded-xl border bg-card p-5">
+            <h2 className="font-editorial text-2xl">
+              Export the shareable Constitution package
+            </h2>
+            <p className="mt-2 max-w-2xl text-xs leading-5 text-muted-foreground">
+              This explicit write creates only <code>.criteriaforge</code> in
+              the selected repository. Originals, private excerpts, OAuth
+              information, run transcripts, and absolute paths are rejected.
+              Export before freezing the evaluation target; otherwise create a
+              fresh target snapshot afterward.
+            </p>
+            <div className="mt-4 grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
+              <Label htmlFor="constitution-export-root" className="sr-only">
+                Absolute repository path for Constitution export
+              </Label>
+              <Input
+                id="constitution-export-root"
+                value={repositoryRoot}
+                onChange={(event) => setRepositoryRoot(event.target.value)}
+                placeholder="/Users/you/Projects/product"
+              />
+              <Button
+                variant="outline"
+                disabled={!repositoryRoot.trim()}
+                onClick={() => void onExport(repositoryRoot.trim())}
+              >
+                <FileJson2 />
+                Export .criteriaforge
+              </Button>
+            </div>
+          </section>
+        )}
+
         <Separator className="my-7" />
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
           <Button variant="outline" onClick={onBack}>
@@ -176,9 +234,14 @@ export function CompileReview({
               <Check className="size-3 text-approved" />
               Originals remain private; only the shareable contract is exportable.
             </p>
-            <Button onClick={onCompile} disabled={!approved}>
+            <Button
+              onClick={calibrated ? onCompile : onCalibrate}
+              disabled={!approved}
+            >
               <Anvil />
-              Compile immutable v1.0
+              {calibrated
+                ? "Compile immutable v1.0"
+                : "Run three calibration checks"}
               <ArrowRight />
             </Button>
           </div>

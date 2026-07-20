@@ -5,7 +5,11 @@ import path from "node:path"
 import Database from "better-sqlite3"
 import { afterEach, describe, expect, it } from "vitest"
 
-import type { ProductConstitution } from "@/lib/criteriaforge/contracts"
+import type {
+  EvaluationRun,
+  ProductConstitution,
+  RemediationBrief,
+} from "@/lib/criteriaforge/contracts"
 import {
   applicationSupportRoot,
   storageLocationWarnings,
@@ -117,6 +121,195 @@ describe("local storage", () => {
       .get("job-1") as { status: string; progress: number }
     verification.close()
     expect(row).toEqual({ status: "interrupted", progress: 42 })
+  })
+
+  it("lists drafts and jobs newest first for restart recovery", () => {
+    const root = tempRoot()
+    const store = new CriteriaForgeStore(root)
+    const workspace = store.createWorkspace({
+      name: "Recovery ordering",
+      sourceLanguage: "en",
+    })
+    const first = store.saveDraftConstitution(workspace.id, { ordinal: 1 })
+    const second = store.saveDraftConstitution(workspace.id, { ordinal: 2 })
+    const firstJob = store.createBackgroundJob({
+      workspaceId: workspace.id,
+      type: "first",
+    }).job
+    const secondJob = store.createBackgroundJob({
+      workspaceId: workspace.id,
+      type: "second",
+    }).job
+
+    expect(
+      store.listDraftConstitutions(workspace.id).map((item) => item.id)
+    ).toEqual([second.id, first.id])
+    expect(store.listBackgroundJobs(workspace.id).map((item) => item.id)).toEqual(
+      [secondJob.id, firstJob.id]
+    )
+    store.close()
+  })
+
+  it("lists fixed target snapshots newest first", () => {
+    const root = tempRoot()
+    const store = new CriteriaForgeStore(root)
+    const workspace = store.createWorkspace({
+      name: "Target ordering",
+      sourceLanguage: "en",
+    })
+    const first = store.createTargetSnapshot({
+      workspaceId: workspace.id,
+      sourceType: "git",
+      contentHash: "a".repeat(64),
+      snapshot: { head: "first" },
+    })
+    const second = store.createTargetSnapshot({
+      workspaceId: workspace.id,
+      sourceType: "git",
+      contentHash: "b".repeat(64),
+      snapshot: { head: "second" },
+    })
+    expect(store.listTargetSnapshots(workspace.id).map((item) => item.id)).toEqual(
+      [second.id, first.id]
+    )
+    store.close()
+  })
+
+  it("lists ratified remediation briefs for restart recovery", () => {
+    const root = tempRoot()
+    const store = new CriteriaForgeStore(root)
+    const workspace = store.createWorkspace({
+      name: "Remediation recovery",
+      sourceLanguage: "en",
+    })
+    const brief = {
+      remediationId: "remediation-1",
+      constitutionVersionId: "constitution-1",
+      targetSnapshotId: "target-1",
+      criterionIds: ["criterion-1"],
+      gaps: [
+        {
+          criterionId: "criterion-1",
+          intent: "Preserve the ratified requirement.",
+          observed: "The artifact omits the requirement.",
+          evidence: [],
+          gap: "Restore the omitted requirement.",
+        },
+      ],
+      allowedFiles: ["src/product.ts"],
+      forbiddenPaths: [".criteriaforge"],
+      allowedCommands: [["npm", "test"]],
+      acceptanceConditions: ["The requirement is present."],
+      maximumSeconds: 300,
+      requiredOutputs: ["A verified patch."],
+    } as RemediationBrief
+    store.saveRemediationBrief({ workspaceId: workspace.id, brief })
+    expect(store.listRemediationBriefs(workspace.id)).toMatchObject([
+      {
+        id: "remediation-1",
+        status: "ratified",
+        contract: brief,
+      },
+    ])
+    store.close()
+  })
+
+  it("migrates the legacy evaluation uniqueness so fresh confirmed runs can repeat", () => {
+    const root = tempRoot()
+    const initial = new CriteriaForgeStore(root)
+    initial.close()
+    const databasePath = path.join(root, "database.sqlite")
+    const legacy = new Database(databasePath)
+    legacy.pragma("foreign_keys = OFF")
+    legacy.exec(`
+      DELETE FROM schema_migrations WHERE version = 1;
+      DROP TABLE evaluation_runs;
+      CREATE TABLE evaluation_runs (
+        id TEXT PRIMARY KEY,
+        workspace_id TEXT NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
+        constitution_version_id TEXT NOT NULL REFERENCES constitution_versions(id),
+        target_snapshot_id TEXT NOT NULL REFERENCES target_snapshots(id),
+        run_index INTEGER NOT NULL,
+        status TEXT NOT NULL,
+        settings_json TEXT NOT NULL,
+        result_json TEXT,
+        input_hash TEXT NOT NULL,
+        output_hash TEXT,
+        started_at TEXT NOT NULL,
+        completed_at TEXT,
+        UNIQUE(constitution_version_id, target_snapshot_id, run_index, input_hash)
+      );
+    `)
+    legacy.close()
+
+    const store = new CriteriaForgeStore(root)
+    const workspace = store.createWorkspace({
+      name: "Repeat evaluation",
+      sourceLanguage: "en",
+    })
+    const now = new Date().toISOString()
+    const constitution = store.saveConstitutionVersion({
+      schemaVersion: "1.0.0",
+      constitutionId: "constitution-repeat",
+      workspaceId: workspace.id,
+      version: "1.0",
+      immutable: true,
+      sourceLanguage: "en",
+      sections: [],
+      criteria: [],
+      citations: [],
+      contentHash: "c".repeat(64),
+      createdAt: now,
+      createdBy: "Product owner",
+    } as unknown as ProductConstitution)
+    const target = store.createTargetSnapshot({
+      workspaceId: workspace.id,
+      sourceType: "git",
+      contentHash: "d".repeat(64),
+      snapshot: { head: "abc123" },
+    })
+    const evaluation = (runId: string) =>
+      ({
+        runId,
+        constitutionVersionId: constitution.id,
+        targetSnapshotId: target.id,
+        modelId: "gpt-5.6-terra",
+        reasoningEffort: "high",
+        codexVersion: "test",
+        promptVersion: "test",
+        schemaVersion: "1.0.0",
+        items: [],
+        startedAt: now,
+        completedAt: now,
+      }) as unknown as EvaluationRun
+
+    expect(() => {
+      store.saveEvaluationRun({
+        workspaceId: workspace.id,
+        constitutionVersionId: constitution.id,
+        targetSnapshotId: target.id,
+        runIndex: 1,
+        status: "completed",
+        settings: {},
+        result: evaluation("evaluation-repeat-1"),
+        inputHash: "e".repeat(64),
+        startedAt: now,
+        completedAt: now,
+      })
+      store.saveEvaluationRun({
+        workspaceId: workspace.id,
+        constitutionVersionId: constitution.id,
+        targetSnapshotId: target.id,
+        runIndex: 1,
+        status: "completed",
+        settings: {},
+        result: evaluation("evaluation-repeat-2"),
+        inputHash: "e".repeat(64),
+        startedAt: now,
+        completedAt: now,
+      })
+    }).not.toThrow()
+    store.close()
   })
 
   it("warns when private evidence is placed in a cloud-sync folder", () => {

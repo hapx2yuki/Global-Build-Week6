@@ -19,7 +19,7 @@ Public proof:
 
 | Criterion | Strongest verified claim | Visible proof | Limitation | Video |
 | --- | --- | --- | --- | --- |
-| Technological Implementation | Strict schemas, local citation hashes, five gates, three-run aggregation, immutable SQLite row, bounded Git worktree, split public build | Reproducibility banner; evidence jump; repair boundary; tests | Local UI is not yet connected to every advanced API state | 0:40–2:25 |
+| Technological Implementation | Strict schemas, local citation hashes, five gates, three-run aggregation, immutable SQLite row, bounded Git worktree, split public build | Reproducibility banner; evidence jump; live local calibration/evaluation; repair boundary; tests | A clean-repository live Codex repair has not yet been recorded | 0:40–2:25 |
 | Design | A document—not a chat transcript—is the authority; AI proposal, human approval, evidence, and gap have distinct visual states | Eight-section Constitution, one material question, five-gate review, Intent/Observed/Evidence/Gap | Human VoiceOver and Safari verification remain | 0:30–1:55 |
 | Potential Impact | A non-technical owner can distinguish plausible AI output from their own intent and reuse one ratified decision system | FounderBrief before/after narrative and exact missing non-goal | One fictional case; no external user study yet | 0:00–0:20, 2:25–2:40 |
 | Quality of Idea | CriteriaForge compiles judgment instead of merely scoring; disagreement is itself a failed product condition | Stable/not_met record, blocked-state explanation, immutable authority line | It detects rather than eliminates model variation | Throughout |
@@ -37,6 +37,16 @@ Public proof:
 - Structural retries: 0, 0, 0
 - Citation adoption: exact locally verified source/segment/locator/hash only
 
+## Live local workflow proof
+
+- Draft: one live `gpt-5.6-terra` structured run, eight sections, three criteria, two material questions
+- Calibration: three live runs, `stable / met`
+- Immutable version: v1.0, hash `a02e559986895c6af6967c413f4e3be9cacfbb159ddfc76aeddcd2cb71bdc55b`
+- Git target: 314 normalized segments from 184 files, commit and dirty-state hash fixed
+- Formal evaluation: three live runs, `unstable / blocked`
+- Safety behavior: remediation disabled because applicability/evidence sufficiency did not converge
+- Recovery: complete application restart restored source, draft, human decisions, version, target, and jobs
+
 ## Claims not yet allowed in the final submission
 
 - “The complete local seven-screen journey works on arbitrary private data.”
@@ -45,4 +55,5 @@ Public proof:
 - “The public demo is live GPT‑5.6.”
 - “AI evaluation is deterministic.”
 - “The post-repair FounderBrief result has been re-measured.”
+- “A live Codex repair was applied and re-evaluated end to end.”
 - Any public URL, video URL, Session ID, or Devpost state that has not been independently opened and confirmed.

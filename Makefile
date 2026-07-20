@@ -9,7 +9,7 @@ preflight:
 	@./scripts/preflight.sh
 
 web-check:
-	@cd apps/web && npm run typecheck && npm run lint && npm test && npm run build
+	@cd apps/web && npm run typecheck && npm run lint && npm test && npm run license:check && npm run build
 
 demo-check:
 	@cd apps/web && npm run build:demo

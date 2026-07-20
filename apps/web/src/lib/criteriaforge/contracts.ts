@@ -374,6 +374,38 @@ export const DraftGenerationSchema = Type.Object(
 )
 export type DraftGeneration = Static<typeof DraftGenerationSchema>
 
+export const CalibrationCaseResultSchema = Type.Object(
+  {
+    criterionId: Identifier,
+    exampleId: Identifier,
+    predictedKind: Type.Union([
+      Type.Literal("good"),
+      Type.Literal("bad"),
+      Type.Literal("boundary"),
+    ]),
+    explanation: Type.String({ minLength: 1, maxLength: 20_000 }),
+    uncertainty: Type.String({ maxLength: 10_000 }),
+  },
+  { additionalProperties: false }
+)
+export type CalibrationCaseResult = Static<
+  typeof CalibrationCaseResultSchema
+>
+
+export const CalibrationGenerationSchema = Type.Object(
+  {
+    cases: Type.Array(CalibrationCaseResultSchema, { minItems: 1 }),
+  },
+  {
+    $schema: "https://json-schema.org/draft/2020-12/schema",
+    $id: "https://criteriaforge.dev/schemas/calibration-generation.schema.json",
+    additionalProperties: false,
+  }
+)
+export type CalibrationGeneration = Static<
+  typeof CalibrationGenerationSchema
+>
+
 export const QualityLevelSchema = Type.Union([
   Type.Literal("insufficient"),
   Type.Literal("minimum"),

@@ -39,38 +39,49 @@ export function ConstitutionDocument({
   selectedSection,
   onSelectSection,
   proposedApproved,
+  onSaveSection,
 }: {
   sections: ConstitutionSection[]
   onSectionsChange: (sections: ConstitutionSection[]) => void
   selectedSection: string
   onSelectSection: (id: string) => void
   proposedApproved: boolean
+  onSaveSection?: (sectionId: string, originalText: string) => Promise<void>
 }) {
   const [editingId, setEditingId] = React.useState<string | null>(null)
   const [draft, setDraft] = React.useState("")
+  const [saving, setSaving] = React.useState(false)
 
   function startEditing(section: ConstitutionSection) {
     setEditingId(section.id)
     setDraft(section.summary)
   }
 
-  function saveEditing(sectionId: string) {
-    onSectionsChange(
-      sections.map((section) =>
-        section.id === sectionId
-          ? {
-              ...section,
-              summary: draft.trim() || section.summary,
-              provenance: "human",
-              provenanceLabel: "Human edited",
-              source: "Direct owner edit · H-31",
-              date: "Jul 21, 2026",
-              status: "approved",
-            }
-          : section
+  async function saveEditing(sectionId: string) {
+    const originalText = draft.trim()
+    if (!originalText) return
+    setSaving(true)
+    try {
+      await onSaveSection?.(sectionId, originalText)
+      onSectionsChange(
+        sections.map((section) =>
+          section.id === sectionId
+            ? {
+                ...section,
+                summary: originalText,
+                provenance: "human",
+                provenanceLabel: "Human edited",
+                source: "Direct owner edit · H-31",
+                date: "Jul 21, 2026",
+                status: "approved",
+              }
+            : section
+        )
       )
-    )
-    setEditingId(null)
+      setEditingId(null)
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
@@ -202,7 +213,8 @@ export function ConstitutionDocument({
                         <div className="flex items-center gap-2">
                           <Button
                             size="sm"
-                            onClick={() => saveEditing(section.id)}
+                            disabled={saving}
+                            onClick={() => void saveEditing(section.id)}
                           >
                             <Save />
                             Save meaning

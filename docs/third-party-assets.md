@@ -12,4 +12,6 @@
 | react-resizable-panels | 分割領域 | https://react-resizable-panels.vercel.app/ | 4.12.2 | MIT | 文書と質問の初期比率・制約を指定 | `apps/web/src/components/criteriaforge/workspace-shell.tsx` | 2026-07-21 |
 | Next.js | Webアプリ基盤 | https://nextjs.org/ | 16.2.10 | MIT | CriteriaForgeアプリを実装 | `apps/web` | 2026-07-21 |
 | React | 画面描画基盤 | https://react.dev/ | 19.2.4 | MIT | CriteriaForgeアプリを実装 | `apps/web` | 2026-07-21 |
+| Sharp / libvips | 画像無害化・変換 | https://sharp.pixelplumbing.com/ | 0.35.3 / 1.3.2 | Apache-2.0、libvips動的実行物はLGPL-3.0-or-later | SVGを生HTMLで描画せず画像化 | `apps/web` の端末内根拠処理 | 2026-07-21 |
+| npm依存物一式 | 実行・開発依存 | `apps/web/package-lock.json` | lockfileを正とする | `npm run license:check`で未知、AGPL、SSPL、BUSL、単独GPL系を停止 | 直接変更なし | `apps/web` | 2026-07-21 |
 | CriteriaForge visual direction v1 | AI生成の設計参考画像 | OpenAI ImageGen | 2026-07-21 | 本プロジェクト用生成物 | 実装時に構成、色、質感を再解釈 | `docs/design/criteriaforge-visual-direction-v1.png` | 2026-07-21 |

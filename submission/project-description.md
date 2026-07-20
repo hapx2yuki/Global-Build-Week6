@@ -51,7 +51,8 @@ Another challenge was making a browser-shaped local app safe. We separated publi
 ## Accomplishments
 
 - Three real `gpt-5.6-sol` evaluations with the same input and settings converged on the same FounderBrief findings.
-- The current automated suite contains 57 unit/integration checks plus four desktop/mobile browser executions.
+- A separate live local path used `gpt-5.6-terra` to draft, calibrate three times, create immutable v1.0, freeze 314 Git evidence segments, and evaluate three times. The evaluation disagreed, so CriteriaForge blocked repair exactly as designed.
+- The current automated suite contains 65 unit/integration checks plus four public desktop/mobile browser executions.
 - Browser checks cover the seven-stage path, keyboard navigation, English/Japanese switching, zero console errors, and zero critical/serious `axe` violations.
 - The current dependency audit reports zero vulnerabilities.
 - The public build contains no local API routes or forbidden local-runtime markers.
@@ -62,7 +63,7 @@ Consistency is not “ask the model three times and vote.” A useful product mu
 
 ## What’s next
 
-Before claiming the local edition as release-complete, we will connect every advanced local API state to all seven screens, finish browser-side video-frame extraction and approved Web observation capture, run the README on a clean macOS machine, complete human VoiceOver and Safari checks, and record the post-repair GPT‑5.6 result.
+Before claiming the local edition as release-complete, we will record the full Codex repair and same-condition re-evaluation on a clean repository, finish browser-side video-frame extraction and approved Web observation capture, run the README on a clean macOS machine, complete human VoiceOver and Safari checks, and record the post-repair GPT‑5.6 result.
 
 ## Try it
 

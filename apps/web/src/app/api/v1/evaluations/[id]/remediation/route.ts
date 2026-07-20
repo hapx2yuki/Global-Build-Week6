@@ -49,6 +49,7 @@ export async function POST(request: NextRequest, context: Context) {
     }
     const store = getStore()
     const workspace = store.getWorkspace(body.workspaceId)
+    const evaluation = store.getEvaluationRun(evaluationId)
     const constitution = store.getConstitutionVersion(
       validation.value.constitutionVersionId
     )
@@ -57,6 +58,10 @@ export async function POST(request: NextRequest, context: Context) {
     )
     if (
       !workspace ||
+      !evaluation ||
+      evaluation.workspaceId !== workspace.id ||
+      evaluation.constitutionVersionId !== constitution?.id ||
+      evaluation.targetSnapshotId !== target?.id ||
       constitution?.workspaceId !== workspace.id ||
       target?.workspaceId !== workspace.id
     ) {

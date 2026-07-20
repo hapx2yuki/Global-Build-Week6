@@ -6,6 +6,7 @@
     "dev": "next dev",
     "local": "node scripts/local.mjs",
     "build": "next build",
+    "build:local": "NEXT_PUBLIC_CRITERIAFORGE_MODE=local CRITERIAFORGE_RUNTIME=local next build",
     "build:demo": "node scripts/build-demo.mjs && node scripts/check-demo-build.mjs",
     "start": "next start",
     "lint": "eslint",
@@ -14,6 +15,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
+    "license:check": "node scripts/check-licenses.mjs",
     "record:founderbrief": "tsx scripts/record-founderbrief.ts"
   },
   "engines": {
