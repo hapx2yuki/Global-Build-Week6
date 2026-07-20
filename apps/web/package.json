@@ -17,7 +17,7 @@
     "record:founderbrief": "tsx scripts/record-founderbrief.ts"
   },
   "engines": {
-    "node": ">=20 <21"
+    "node": "24.x"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

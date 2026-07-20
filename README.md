@@ -36,7 +36,7 @@ The demo build physically removes local API routes before compilation and verifi
 Requirements:
 
 - macOS 14 or later
-- Node.js 20 (see `.nvmrc`)
+- Node.js 24 (see `.nvmrc`)
 - npm
 - Git
 - Codex CLI authenticated with `codex login`
