@@ -285,8 +285,7 @@ export class CriteriaForgeStore {
         input_hash TEXT NOT NULL,
         output_hash TEXT,
         started_at TEXT NOT NULL,
-        completed_at TEXT,
-        UNIQUE(constitution_version_id, target_snapshot_id, run_index, input_hash)
+        completed_at TEXT
       );
 
       CREATE TABLE IF NOT EXISTS citations (
@@ -374,6 +373,75 @@ export class CriteriaForgeStore {
       CREATE INDEX IF NOT EXISTS audit_workspace
         ON audit_events(workspace_id, created_at);
     `)
+    this.removeLegacyEvaluationUniqueness()
+  }
+
+  private removeLegacyEvaluationUniqueness(): void {
+    const migrationVersion = 1
+    const applied = this.database
+      .prepare(`SELECT 1 FROM schema_migrations WHERE version = ?`)
+      .get(migrationVersion)
+    if (applied) return
+
+    const table = this.database
+      .prepare(
+        `SELECT sql FROM sqlite_master
+         WHERE type = 'table' AND name = 'evaluation_runs'`
+      )
+      .get() as { sql: string } | undefined
+    const legacyConstraint =
+      table?.sql.includes(
+        "UNIQUE(constitution_version_id, target_snapshot_id, run_index, input_hash)"
+      ) ?? false
+
+    if (legacyConstraint) {
+      this.database.pragma("foreign_keys = OFF")
+      try {
+        this.database.exec(`
+          BEGIN IMMEDIATE;
+          CREATE TABLE evaluation_runs_next (
+            id TEXT PRIMARY KEY,
+            workspace_id TEXT NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
+            constitution_version_id TEXT NOT NULL REFERENCES constitution_versions(id),
+            target_snapshot_id TEXT NOT NULL REFERENCES target_snapshots(id),
+            run_index INTEGER NOT NULL,
+            status TEXT NOT NULL,
+            settings_json TEXT NOT NULL,
+            result_json TEXT,
+            input_hash TEXT NOT NULL,
+            output_hash TEXT,
+            started_at TEXT NOT NULL,
+            completed_at TEXT
+          );
+          INSERT INTO evaluation_runs_next
+          SELECT id, workspace_id, constitution_version_id,
+                 target_snapshot_id, run_index, status, settings_json,
+                 result_json, input_hash, output_hash, started_at, completed_at
+          FROM evaluation_runs;
+          DROP TABLE evaluation_runs;
+          ALTER TABLE evaluation_runs_next RENAME TO evaluation_runs;
+          COMMIT;
+        `)
+      } catch (error) {
+        if (this.database.inTransaction) this.database.exec("ROLLBACK")
+        throw error
+      } finally {
+        this.database.pragma("foreign_keys = ON")
+      }
+      const violations = this.database.pragma("foreign_key_check") as unknown[]
+      if (violations.length > 0) {
+        throw new Error(
+          "Evaluation-run migration left invalid foreign-key references"
+        )
+      }
+    }
+
+    this.database
+      .prepare(
+        `INSERT INTO schema_migrations (version, applied_at)
+         VALUES (?, ?)`
+      )
+      .run(migrationVersion, new Date().toISOString())
   }
 
   private recoverInterruptedJobs(): void {
@@ -912,6 +980,19 @@ export class CriteriaForgeStore {
       : null
   }
 
+  listBackgroundJobs(workspaceId: string): BackgroundJobRecord[] {
+    const rows = this.database
+      .prepare(
+        `SELECT id FROM background_jobs
+         WHERE workspace_id = ?
+         ORDER BY created_at DESC, rowid DESC`
+      )
+      .all(workspaceId) as Array<{ id: string }>
+    return rows
+      .map((row) => this.getBackgroundJob(row.id))
+      .filter((job): job is BackgroundJobRecord => Boolean(job))
+  }
+
   updateBackgroundJob(
     id: string,
     update: Partial<
@@ -1037,6 +1118,27 @@ export class CriteriaForgeStore {
           updatedAt: row.updated_at,
         }
       : null
+  }
+
+  listDraftConstitutions(
+    workspaceId: string
+  ): Array<NonNullable<ReturnType<CriteriaForgeStore["getDraftConstitution"]>>> {
+    const rows = this.database
+      .prepare(
+        `SELECT id FROM draft_constitutions
+         WHERE workspace_id = ?
+         ORDER BY revision DESC`
+      )
+      .all(workspaceId) as Array<{ id: string }>
+    return rows
+      .map((row) => this.getDraftConstitution(row.id))
+      .filter(
+        (
+          draft
+        ): draft is NonNullable<
+          ReturnType<CriteriaForgeStore["getDraftConstitution"]>
+        > => Boolean(draft)
+      )
   }
 
   replaceDraftConstitution(
@@ -1286,6 +1388,19 @@ export class CriteriaForgeStore {
       : null
   }
 
+  listTargetSnapshots(workspaceId: string): TargetSnapshotRecord[] {
+    const rows = this.database
+      .prepare(
+        `SELECT id FROM target_snapshots
+         WHERE workspace_id = ?
+         ORDER BY created_at DESC, rowid DESC`
+      )
+      .all(workspaceId) as Array<{ id: string }>
+    return rows
+      .map((row) => this.getTargetSnapshot(row.id))
+      .filter((target): target is TargetSnapshotRecord => Boolean(target))
+  }
+
   saveEvaluationRun(input: {
     workspaceId: string
     constitutionVersionId: string
@@ -1465,6 +1580,27 @@ export class CriteriaForgeStore {
           updatedAt: row.updated_at,
         }
       : null
+  }
+
+  listRemediationBriefs(
+    workspaceId: string
+  ): Array<NonNullable<ReturnType<CriteriaForgeStore["getRemediationBrief"]>>> {
+    const rows = this.database
+      .prepare(
+        `SELECT id FROM remediation_briefs
+         WHERE workspace_id = ?
+         ORDER BY created_at DESC, rowid DESC`
+      )
+      .all(workspaceId) as Array<{ id: string }>
+    return rows
+      .map((row) => this.getRemediationBrief(row.id))
+      .filter(
+        (
+          remediation
+        ): remediation is NonNullable<
+          ReturnType<CriteriaForgeStore["getRemediationBrief"]>
+        > => Boolean(remediation)
+      )
   }
 
   updateRemediationStatus(id: string, status: string): void {

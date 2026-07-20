@@ -91,10 +91,6 @@ export async function POST(request: NextRequest, context: Context) {
               : decision === "reject"
                 ? ("rejected" as const)
                 : ("deferred" as const),
-          provenance:
-            decision === "approve"
-              ? ("human_approved" as const)
-              : section.provenance,
           lastEditedBy: decidedBy.trim(),
           lastEditedAt: new Date().toISOString(),
         }
@@ -115,10 +111,6 @@ export async function POST(request: NextRequest, context: Context) {
               : decision === "reject"
                 ? ("rejected" as const)
                 : ("deferred" as const),
-          provenance:
-            decision === "approve"
-              ? ("human_approved" as const)
-              : criterion.provenance,
           examples: criterion.examples.map((example) => ({
             ...example,
             ratified: decision === "approve",

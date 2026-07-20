@@ -15,7 +15,9 @@ This repository is an OpenAI Build Week project in the **Work & Productivity** c
 - Local normalization for PDF, DOCX, PPTX, TXT, Markdown, CSV, XLSX, PNG, JPEG, WebP, SVG, MP4, MOV, WebM, and local Git repositories. Unsupported or unreadable portions remain explicit instead of being guessed.
 - ChatGPT OAuth reuse through `codex login status` and `codex exec`. CriteriaForge never reads `~/.codex/auth.json` or asks for an API key.
 - Strict JSON Schema validation, one structural repair retry, local citation/hash verification, five compile safeguards, immutable Constitution rows, four-layer absolute evaluation, and three-run stability checks.
+- A live local journey from source intake through eight-section drafting, human decisions, three-run calibration, immutable compilation, Git target freezing, and three-run formal evaluation. Every Codex send has a fresh segment-level disclosure review.
 - Bounded remediation through a detached Git worktree, a read-only Constitution copy, exact file allowlists, forbidden paths, approved command arrays, patch verification, human approval, and original-HEAD rechecking.
+- Local remediation and re-evaluation screens that refuse unstable findings, expose the full verified patch only on the Mac, and compare results only when the Constitution, model, reasoning effort, prompt version, and Schema version match.
 - Explicit export of a shareable `.criteriaforge` package with schemas, calibration cases, acceptance cases, a Codex Skill, an `AGENTS.md` fragment, and SHA-256 checksums. Private citations and known secret/path markers are rejected.
 
 ## Public demo
@@ -51,7 +53,11 @@ npm run local
 
 `npm run local` chooses an unused loopback port, starts CriteriaForge, and opens the one-time bootstrap URL. Originals, normalized evidence, frames, run records, and worktrees stay outside the repository.
 
-The local interface currently connects workspace creation and file ingestion directly to the private runtime. The production API also implements draft generation, human decisions, immutable compilation, Git target snapshots, three-run evaluation, remediation, patch application, and Constitution export. The remaining release work is to connect every advanced local API state to the seven interface stages and complete browser-side video-frame and approved-Web-observation capture; these are not claimed as complete in the submission materials.
+For a production-optimized local verification build, use `npm run build:local` before `CRITERIAFORGE_LOCAL_PRODUCTION=1 npm run local`. A normal `npm run build` follows the selected deployment environment and must not be reused to infer the local/public mode.
+
+The local interface connects all seven stages to persisted production state. The first five stages have also completed a live `gpt-5.6-terra` self-test: a source-derived draft, human ratification, three stable calibration runs, an immutable v1.0, a 314-segment Git snapshot, and three formal evaluations. Those formal runs disagreed on evidence sufficiency, so the product correctly returned `blocked` and disabled automated repair instead of hiding the disagreement.
+
+The bounded worktree engine and its local repair/re-evaluation screens are implemented and covered by automated tests, but a clean-repository end-to-end Codex repair has not yet been recorded for the submission. Browser-side video-frame extraction and approved Web-observation capture also remain incomplete; neither is claimed as release-complete.
 
 ## Validation
 
@@ -63,9 +69,10 @@ make demo-check
 cd apps/web
 npm run test:e2e
 npm audit --audit-level=high
+npm run license:check
 ```
 
-The current automated suite covers the data contracts, five compile safeguards, immutable storage, semantic invalidation, four-layer aggregation, evidence parsing and malicious inputs, OAuth/Codex structured output behavior, citation verification, private export, bounded Git remediation, desktop/mobile navigation, keyboard use, console errors, and critical/serious accessibility violations.
+The current automated suite contains 65 unit/integration checks and four public desktop/mobile browser runs. It covers the data contracts, five compile safeguards, immutable storage and migration, semantic invalidation, four-layer aggregation, evidence parsing and malicious inputs, OAuth/Codex structured output behavior, citation verification, private export, bounded Git remediation, desktop/mobile navigation, keyboard use, console errors, and critical/serious accessibility violations. Separate opt-in local browser checks exercise intake, restart recovery, three-run calibration/compilation, and three-run formal evaluation with an authenticated Codex CLI.
 
 ## Architecture
 
@@ -103,6 +110,7 @@ Detailed design and evidence:
 - Private evidence is protected by macOS account permissions and FileVault; CriteriaForge does not add its own at-rest encryption.
 - Video vision is supported by the data model, but the current server ingestion leaves frame extraction pending for the browser. Audio without supplied subtitles is never inferred.
 - Web evaluation accepts only localhost or an explicitly approved URL by design; the recorded demo does not perform live Web observation.
+- A dirty Git snapshot can be evaluated, but this release refuses to start bounded repair until the repository is clean; it will not pretend a detached worktree contains uncommitted source changes.
 - `.fig` files are not parsed. Export PDF, PNG, or SVG from Figma.
 - The public demo is a recorded replay, not a live GPT‑5.6 endpoint.
 - AI determinism is not promised. CriteriaForge promises to detect material disagreement and stop.

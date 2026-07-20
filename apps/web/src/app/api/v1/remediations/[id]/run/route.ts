@@ -181,6 +181,12 @@ async function runRemediationJob(input: {
         codexVersion: result.codexVersion,
         outputHash: result.outputHash,
         retryCount: result.retryCount,
+        modelId: input.model,
+        reasoningEffort: input.reasoningEffort,
+        promptVersion: "remediation-1.0.0",
+        schemaVersion: "1.0.0",
+        constitutionVersionId: remediation.contract.constitutionVersionId,
+        targetSnapshotId: remediation.contract.targetSnapshotId,
       },
     })
   } catch (error) {
@@ -262,6 +268,13 @@ export async function POST(request: NextRequest, context: Context) {
       ),
     })
     if (!existing) {
+      store.saveEgressApproval({
+        workspaceId: remediation.workspaceId,
+        purpose: "remediation",
+        modelId: model,
+        segmentIds: remediation.contract.criterionIds,
+        hashes: [sha256(JSON.stringify(remediation.contract))],
+      })
       store.updateRemediationStatus(id, "running")
       void runRemediationJob({
         jobId: job.id,

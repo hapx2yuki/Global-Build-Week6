@@ -111,7 +111,12 @@ export function toOpenAIStructuredOutputSchema(
     const node = value as JsonSchemaNode
     const result: JsonSchemaNode = {}
     for (const [key, child] of Object.entries(node)) {
-      if (key === "properties" || key === "required" || key === "format") {
+      if (
+        key === "properties" ||
+        key === "required" ||
+        key === "format" ||
+        key === "uniqueItems"
+      ) {
         continue
       }
       result[key] = visit(child)

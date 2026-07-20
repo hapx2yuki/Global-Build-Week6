@@ -85,7 +85,7 @@ function loadApprovedExcerpts(
   approved: ApprovedSegment[]
 ): ApprovedEvidenceExcerpt[] {
   const store = getStore()
-  return approved.map((approval) => {
+  const excerpts = approved.map((approval) => {
     const source = store.getEvidenceSource(approval.sourceId)
     const segment = store
       .listEvidenceSegments(approval.sourceId)
@@ -123,6 +123,19 @@ function loadApprovedExcerpts(
       content,
     }
   })
+  const characterCount = excerpts.reduce(
+    (total, excerpt) => total + excerpt.content.length,
+    0
+  )
+  if (characterCount > 480_000) {
+    throw new ApiFailure(
+      413,
+      "codex_text_limit",
+      "The approved evaluation excerpts exceed the approximately 120,000-token send limit.",
+      "Choose a narrower set of product evidence."
+    )
+  }
+  return excerpts
 }
 
 async function runEvaluationJob(input: {
@@ -239,6 +252,11 @@ async function runEvaluationJob(input: {
         ),
         constitutionVersionId: constitution.id,
         targetSnapshotId: target.id,
+        modelId: input.model,
+        reasoningEffort: input.reasoningEffort,
+        codexVersions: [...new Set(runs.map((run) => run.codexVersion))],
+        promptVersion: "evaluation-1.0.0",
+        schemaVersion: "1.0.0",
       },
     })
   } catch (error) {

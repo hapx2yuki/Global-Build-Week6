@@ -80,6 +80,9 @@ export async function PATCH(request: NextRequest, context: Context) {
         approvalStatus: semanticChanged
           ? ("pending" as const)
           : section.approvalStatus,
+        provenance: semanticChanged
+          ? ("human_approved" as const)
+          : section.provenance,
         lastEditedBy:
           typeof body.editedBy === "string" && body.editedBy.trim()
             ? body.editedBy.trim()

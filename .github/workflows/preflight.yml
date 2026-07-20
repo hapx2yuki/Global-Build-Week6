@@ -53,6 +53,9 @@ jobs:
       - name: Audit high and critical vulnerabilities
         run: npm audit --audit-level=high
 
+      - name: Review dependency licenses
+        run: npm run license:check
+
       - name: Build secretless public demo
         run: npm run build:demo
 

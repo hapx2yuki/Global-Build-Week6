@@ -51,16 +51,19 @@ const child = spawn(
   }
 )
 
+process.stdout.write(`CriteriaForge local URL: ${url}\n`)
+
 const openTimer = setTimeout(() => {
-  if (process.platform === "darwin") {
+  if (
+    process.platform === "darwin" &&
+    process.env.CRITERIAFORGE_NO_OPEN !== "1"
+  ) {
     const opener = spawn("open", [url], {
       shell: false,
       stdio: "ignore",
       detached: true,
     })
     opener.unref()
-  } else {
-    process.stdout.write(`Open ${url}\n`)
   }
 }, 1_500)
 
