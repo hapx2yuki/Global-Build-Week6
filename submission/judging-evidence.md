@@ -9,6 +9,12 @@
 | Uses GPT‑5.6 | Three real `gpt-5.6-sol` FounderBrief evaluations | `apps/web/src/fixtures/founderbrief/recorded-evaluations.json` |
 | Baseline viability | Static public replay, private local runtime, automated evidence | `apps/web/tests/demo-flow.spec.ts`, `docs/evaluation-plan.md` |
 
+Public proof:
+
+- Demo: [https://criteriaforge.vercel.app](https://criteriaforge.vercel.app)
+- Repository: [https://github.com/hapx2yuki/Global-Build-Week6](https://github.com/hapx2yuki/Global-Build-Week6)
+- Pull Request: [#7](https://github.com/hapx2yuki/Global-Build-Week6/pull/7)
+
 ## Scored criteria
 
 | Criterion | Strongest verified claim | Visible proof | Limitation | Video |

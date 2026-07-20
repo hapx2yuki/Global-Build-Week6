@@ -22,6 +22,8 @@ This repository is an OpenAI Build Week project in the **Work & Productivity** c
 
 The browser demo uses fictional FounderBrief data. It does not upload files or call Codex. The banner says **“Replay recorded GPT-5.6 evaluation”** and exposes the reproducibility record. The recorded result was produced by three real `gpt-5.6-sol` runs with the same input and settings; it is not represented as a live run.
 
+Open the production demo: [criteriaforge.vercel.app](https://criteriaforge.vercel.app)
+
 ```bash
 cd apps/web
 npm ci
@@ -107,4 +109,4 @@ Detailed design and evidence:
 
 ## Submission status
 
-Implementation and verification are in progress. A public GitHub URL, deployed Vercel URL, public sub-three-minute YouTube video, Codex `/feedback` Session ID, and final Devpost submission are recorded only after each exists and has been checked while logged out. `make submission-check` intentionally fails until those external deliverables are complete.
+Implementation and verification are in progress. The [public GitHub repository](https://github.com/hapx2yuki/Global-Build-Week6) and [Vercel demo](https://criteriaforge.vercel.app) are live and have been checked in clean desktop and mobile browser contexts. A public sub-three-minute YouTube video, Codex `/feedback` Session ID, and final Devpost submission are recorded only after each exists and has been checked while logged out. `make submission-check` intentionally fails until those external deliverables are complete.

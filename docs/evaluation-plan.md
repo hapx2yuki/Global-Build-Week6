@@ -56,6 +56,7 @@
 - Git worktreeの許可内変更、許可外変更、追加ファイル、元HEAD変更
 - 1440×900、390×844、キーボード、英日切替
 - `axe`のcritical／serious違反0件とブラウザconsole error 0件
+- `https://criteriaforge.vercel.app`に対する新規デスクトップ／スマートフォン文脈の4画面試験
 
 再現コマンド：
 

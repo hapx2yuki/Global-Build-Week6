@@ -66,7 +66,11 @@ Before claiming the local edition as release-complete, we will connect every adv
 
 ## Try it
 
-Use the public FounderBrief replay without signing in, or run the macOS edition with Node.js 20, Git, and an authenticated Codex CLI:
+Use the public FounderBrief replay without signing in:
+
+[https://criteriaforge.vercel.app](https://criteriaforge.vercel.app)
+
+Or run the macOS edition with Node.js 24, Git, and an authenticated Codex CLI:
 
 ```bash
 cd apps/web
