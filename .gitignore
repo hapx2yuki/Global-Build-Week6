@@ -21,12 +21,15 @@ id_rsa.*
 *.log
 tmp/
 .tmp/
+.playwright-cli/
+output/
 
 # Common JavaScript outputs
 node_modules/
 dist/
 .next/
 coverage/
+apps/web/test-results/
 
 # Common Python outputs
 .venv/
@@ -39,4 +42,3 @@ __pycache__/
 # Common build outputs
 build/
 out/
-

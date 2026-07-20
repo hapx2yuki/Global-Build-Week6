@@ -1,71 +1,112 @@
-# OpenAI Build Week Preparation Workspace
+# CriteriaForge
 
-This repository is the working home for an OpenAI Build Week submission. It currently contains the submission workflow, evidence templates, and automated checks; the product concept and implementation have not yet been selected.
+> Human intent becomes a ratified, executable Product Constitution; Codex may apply it, but may never silently redefine it.
 
-## Current status
+CriteriaForge is a local-first product for non-technical product owners who build with Codex. It turns original product evidence into a human-ratified, testable Product Constitution, evaluates a fixed artifact three times against the same contract, and lets Codex repair only an explicitly approved gap inside a disposable Git worktree.
 
-| Item | Status |
-| --- | --- |
-| Devpost registration | Registered |
-| Product concept | Not selected |
-| Product implementation | Not started |
-| GitHub repository | Private during preparation |
-| Devpost project | Not created yet |
-| Final submission | Incomplete |
+This repository is an OpenAI Build Week project in the **Work & Productivity** category. It is licensed under the [MIT License](LICENSE).
 
-The submission deadline shown by Devpost is **July 21, 2026 at 5:00 PM PT**, which is **July 22, 2026 at 9:00 AM JST**. Recheck Devpost before the final submission in case the organizer changes the schedule.
+## What is working
 
-## Submission contract
+- A seven-stage English/Japanese interface built with Next.js and shadcn/ui.
+- A public, sign-in-free FounderBrief replay backed by three recorded `gpt-5.6-sol` evaluations, with model, Codex version, hashes, run count, citation verification, and source commit shown in the interface.
+- A macOS local runtime bound only to a random `127.0.0.1` port, protected by a one-time bootstrap exchange, an HttpOnly session cookie, CSRF proof, origin checks, and a restrictive Content Security Policy.
+- Private SQLite and content-addressed file storage under `~/Library/Application Support/CriteriaForge/`, with `0700` directories, `0600` files, restart recovery, and complete workspace deletion.
+- Local normalization for PDF, DOCX, PPTX, TXT, Markdown, CSV, XLSX, PNG, JPEG, WebP, SVG, MP4, MOV, WebM, and local Git repositories. Unsupported or unreadable portions remain explicit instead of being guessed.
+- ChatGPT OAuth reuse through `codex login status` and `codex exec`. CriteriaForge never reads `~/.codex/auth.json` or asks for an API key.
+- Strict JSON Schema validation, one structural repair retry, local citation/hash verification, five compile safeguards, immutable Constitution rows, four-layer absolute evaluation, and three-run stability checks.
+- Bounded remediation through a detached Git worktree, a read-only Constitution copy, exact file allowlists, forbidden paths, approved command arrays, patch verification, human approval, and original-HEAD rechecking.
+- Explicit export of a shareable `.criteriaforge` package with schemas, calibration cases, acceptance cases, a Codex Skill, an `AGENTS.md` fragment, and SHA-256 checksums. Private citations and known secret/path markers are rejected.
 
-The final entry must include:
+## Public demo
 
-- a working project built with Codex and GPT-5.6;
-- one category: Apps for Your Life, Work & Productivity, Developer Tools, or Education;
-- an English project description;
-- a public YouTube demo with audio that is shorter than three minutes;
-- a testable repository with either public licensed access or private reviewer access;
-- a Codex Session ID obtained through `/feedback`;
-- installation, platform, and test instructions when the entry is a plugin or developer tool.
+The browser demo uses fictional FounderBrief data. It does not upload files or call Codex. The banner says **“Replay recorded GPT-5.6 evaluation”** and exposes the reproducibility record. The recorded result was produced by three real `gpt-5.6-sol` runs with the same input and settings; it is not represented as a live run.
 
-The repository must remain freely accessible to the judges through the end of judging.
-
-## Prepare this workspace
-
-Requirements: Git, Bash, and Make.
+Open the production demo: [criteriaforge.vercel.app](https://criteriaforge.vercel.app)
 
 ```bash
-make setup
+cd apps/web
+npm ci
+npm run build:demo
+npm run start
+```
+
+The demo build physically removes local API routes before compilation and verifies that the output contains no local API bundle, `better-sqlite3`, child-process marker, or local session secret name.
+
+## Local macOS edition
+
+Requirements:
+
+- macOS 14 or later
+- Node.js 24 (see `.nvmrc`)
+- npm
+- Git
+- Codex CLI authenticated with `codex login`
+
+```bash
+cd apps/web
+npm ci
+npm run local
+```
+
+`npm run local` chooses an unused loopback port, starts CriteriaForge, and opens the one-time bootstrap URL. Originals, normalized evidence, frames, run records, and worktrees stay outside the repository.
+
+The local interface currently connects workspace creation and file ingestion directly to the private runtime. The production API also implements draft generation, human decisions, immutable compilation, Git target snapshots, three-run evaluation, remediation, patch application, and Constitution export. The remaining release work is to connect every advanced local API state to the seven interface stages and complete browser-side video-frame and approved-Web-observation capture; these are not claimed as complete in the submission materials.
+
+## Validation
+
+```bash
 make preflight
+make web-check
+make demo-check
+
+cd apps/web
+npm run test:e2e
+npm audit --audit-level=high
 ```
 
-`make setup` installs the repository-local pre-commit hook and creates an ignored local submission metadata file when one does not exist. `make preflight` checks the repository structure, shell syntax, and common secret patterns.
+The current automated suite covers the data contracts, five compile safeguards, immutable storage, semantic invalidation, four-layer aggregation, evidence parsing and malicious inputs, OAuth/Codex structured output behavior, citation verification, private export, bounded Git remediation, desktop/mobile navigation, keyboard use, console errors, and critical/serious accessibility violations.
 
-To inspect what is still missing from the final submission:
+## Architecture
 
-```bash
-make submission-check
+```mermaid
+flowchart LR
+    O["Product owner"] --> I["Local evidence intake"]
+    I --> P["Private evidence store"]
+    P --> A{"Per-run send approval"}
+    A --> C["Codex / GPT-5.6"]
+    C --> D["Proposed Constitution"]
+    D --> H["Human ratification"]
+    H --> G["Five deterministic gates"]
+    G --> V["Immutable version"]
+    V --> E["Three independent evaluations"]
+    E --> R["Intent · Observed · Evidence · Gap"]
+    R --> W["Bounded Git worktree"]
+    W --> Q["Human-approved patch"]
+    Q --> E
 ```
 
-This strict check is expected to fail until the product, demo, repository access, and Devpost draft are complete.
+The source language is authoritative. Translations are reference-only. A failed must-pass rule is never offset by quality elsewhere. Unstable evaluation, missing evidence, conflicting authority, and unknown applicability all stop the decision.
 
-## Repository map
+Detailed design and evidence:
 
-| Path | Purpose |
-| --- | --- |
-| `docs/requirements.md` | Verified event requirements and conservative decisions |
-| `docs/build-log.md` | Record of Codex, GPT-5.6, and human contributions |
-| `docs/decision-log.md` | Important product and engineering decisions |
-| `docs/evaluation-plan.md` | Test cases, metrics, and result-recording format |
-| `docs/security-privacy.md` | Safety, privacy, abuse, and cost review |
-| `submission/` | Description, video, judging evidence, and release checklist |
-| `scripts/` | Local preflight and submission-readiness checks |
-| `.github/workflows/` | Continuous integration for every push and pull request |
+- [Architecture](docs/architecture.md)
+- [Security and privacy](docs/security-privacy.md)
+- [Evaluation record](docs/evaluation-plan.md)
+- [Decision log](docs/decision-log.md)
+- [Build log](docs/build-log.md)
+- [Judging evidence](submission/judging-evidence.md)
 
-## Product setup and use
+## Known limits
 
-No product runtime exists yet. Once the concept and technology are selected, this section must be replaced with exact installation, configuration, sample-input, run, and test commands that a judge can follow without private knowledge.
+- This first release is for one person on one Mac.
+- Private evidence is protected by macOS account permissions and FileVault; CriteriaForge does not add its own at-rest encryption.
+- Video vision is supported by the data model, but the current server ingestion leaves frame extraction pending for the browser. Audio without supplied subtitles is never inferred.
+- Web evaluation accepts only localhost or an explicitly approved URL by design; the recorded demo does not perform live Web observation.
+- `.fig` files are not parsed. Export PDF, PNG, or SVG from Figma.
+- The public demo is a recorded replay, not a live GPT‑5.6 endpoint.
+- AI determinism is not promised. CriteriaForge promises to detect material disagreement and stop.
 
-## Sources of truth
+## Submission status
 
-The [Devpost overview](https://openai-build-week.devpost.com/) and [Official Rules](https://openai-build-week.devpost.com/rules) override this repository if they change. Internal preparation details are recorded in `docs/requirements.md`.
-
+Implementation and verification are in progress. The [public GitHub repository](https://github.com/hapx2yuki/Global-Build-Week6) and [Vercel demo](https://criteriaforge.vercel.app) are live and have been checked in clean desktop and mobile browser contexts. A public sub-three-minute YouTube video, Codex `/feedback` Session ID, and final Devpost submission are recorded only after each exists and has been checked while logged out. `make submission-check` intentionally fails until those external deliverables are complete.
