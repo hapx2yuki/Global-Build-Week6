@@ -32,11 +32,19 @@ test("recorded FounderBrief flow preserves authority and comparison boundaries",
       .click()
   }
   await page.getByRole("button", { name: "Approve recommendation" }).click()
+  if (testInfo.project.name.startsWith("mobile")) {
+    await page
+      .getByRole("button", { name: "Open constitution question" })
+      .click()
+  }
   await expect(
     page.getByRole("button", { name: "Recommendation approved" }).filter({
       visible: true,
     })
   ).toBeVisible()
+  if (testInfo.project.name.startsWith("mobile")) {
+    await page.keyboard.press("Escape")
+  }
 
   await page.keyboard.press("Control+3")
   await expect(
