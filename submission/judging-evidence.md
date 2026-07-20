@@ -1,33 +1,42 @@
 # Judging Evidence Map
 
-Complete this document before recording the demo. Every claim should point to something a judge can see in the video, README, code, or reproducible test.
-
 ## Gate criteria
 
 | Gate | Evidence | Location |
 | --- | --- | --- |
-| Fits OpenAI Build Week | Explain the user problem and working solution | Not yet recorded |
-| Uses Codex | Build log, Session ID, and one concrete acceleration story | `docs/build-log.md` |
-| Uses GPT-5.6 | Working feature or meaningful development task | Not yet selected |
-| Baseline viability | End-to-end test and demo | Not yet implemented |
+| Fits OpenAI Build Week | A working product for a concrete Codex-era productivity problem | `README.md`, public FounderBrief replay |
+| Uses Codex | OAuth reuse, structured `codex exec`, bounded remediation, build record | `apps/web/src/lib/criteriaforge/codex-runner.ts`, `docs/build-log.md` |
+| Uses GPT‑5.6 | Three real `gpt-5.6-sol` FounderBrief evaluations | `apps/web/src/fixtures/founderbrief/recorded-evaluations.json` |
+| Baseline viability | Static public replay, private local runtime, automated evidence | `apps/web/tests/demo-flow.spec.ts`, `docs/evaluation-plan.md` |
 
 ## Scored criteria
 
-| Criterion | Strongest claim | Visible proof | Failure or limitation | Video time | Repository location |
-| --- | --- | --- | --- | --- | --- |
-| Technological Implementation | Not yet defined | Not yet defined | Not yet defined | - | - |
-| Design | Not yet defined | Not yet defined | Not yet defined | - | - |
-| Potential Impact | Not yet defined | Not yet defined | Not yet defined | - | - |
-| Quality of Idea | Not yet defined | Not yet defined | Not yet defined | - | - |
+| Criterion | Strongest verified claim | Visible proof | Limitation | Video |
+| --- | --- | --- | --- | --- |
+| Technological Implementation | Strict schemas, local citation hashes, five gates, three-run aggregation, immutable SQLite row, bounded Git worktree, split public build | Reproducibility banner; evidence jump; repair boundary; tests | Local UI is not yet connected to every advanced API state | 0:40–2:25 |
+| Design | A document—not a chat transcript—is the authority; AI proposal, human approval, evidence, and gap have distinct visual states | Eight-section Constitution, one material question, five-gate review, Intent/Observed/Evidence/Gap | Human VoiceOver and Safari verification remain | 0:30–1:55 |
+| Potential Impact | A non-technical owner can distinguish plausible AI output from their own intent and reuse one ratified decision system | FounderBrief before/after narrative and exact missing non-goal | One fictional case; no external user study yet | 0:00–0:20, 2:25–2:40 |
+| Quality of Idea | CriteriaForge compiles judgment instead of merely scoring; disagreement is itself a failed product condition | Stable/not_met record, blocked-state explanation, immutable authority line | It detects rather than eliminates model variation | Throughout |
 
-## Tie-break preparation
+## Recorded GPT‑5.6 proof
 
-If time is limited, strengthen evidence in this order:
+- Model: `gpt-5.6-sol`
+- Codex: `codex-cli 0.145.0-alpha.2`
+- Runs: 3
+- Shared input hash: `3c8ff4e3eb1d99efc2f942f96a470233343140ebf2d3d0b6ddf953edd8a0ae88`
+- Schema hash: `ea3f0da209cd2163a72ac1c61b59436825eebcb052764edaaf8ac3264491878b`
+- Aggregation: `stable / not_met`
+- Must-pass conclusions: FR-01 fail, FR-02 fail
+- Quality conclusions: FR-03 insufficient, UX-02 good
+- Structural retries: 0, 0, 0
+- Citation adoption: exact locally verified source/segment/locator/hash only
 
-1. Technological Implementation
-2. Design
-3. Potential Impact
-4. Quality of Idea
+## Claims not yet allowed in the final submission
 
-This order reflects the stated tie-break sequence, not a difference in the normal criterion weights.
-
+- “The complete local seven-screen journey works on arbitrary private data.”
+- “Video audio is automatically understood.”
+- “Figma files are directly parsed.”
+- “The public demo is live GPT‑5.6.”
+- “AI evaluation is deterministic.”
+- “The post-repair FounderBrief result has been re-measured.”
+- Any public URL, video URL, Session ID, or Devpost state that has not been independently opened and confirmed.

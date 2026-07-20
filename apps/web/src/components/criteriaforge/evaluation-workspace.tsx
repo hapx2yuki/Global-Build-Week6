@@ -44,6 +44,7 @@ import {
 } from "@/components/ui/toggle-group"
 import { cn } from "@/lib/utils"
 import { evaluationCriteria } from "@/lib/criteriaforge-data"
+import recordedFounderBrief from "@/fixtures/founderbrief/recorded-evaluations.json"
 
 const statusConfig = {
   fail: {
@@ -160,7 +161,11 @@ function CriterionRow({
   )
 }
 
-export function EvaluationWorkspace() {
+export function EvaluationWorkspace({
+  onRemediate,
+}: {
+  onRemediate?: () => void
+}) {
   const [improved, setImproved] = React.useState(false)
   const [query, setQuery] = React.useState("")
   const [statusFilter, setStatusFilter] = React.useState<
@@ -227,7 +232,7 @@ export function EvaluationWorkspace() {
               <GitCompareArrows />
               {improved ? "View original build" : "Compare repaired build"}
             </Button>
-            <Button variant="outline">
+            <Button variant="outline" onClick={onRemediate}>
               Create Codex brief
               <ArrowRight />
             </Button>
@@ -252,7 +257,7 @@ export function EvaluationWorkspace() {
             />
           </div>
           <p className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
-            Formal evaluation · 3 independent runs
+            Formal evaluation · {recordedFounderBrief.runCount} independent runs
           </p>
         </div>
       </header>

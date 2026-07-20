@@ -18,20 +18,24 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command"
-import { viewCommands } from "@/lib/criteriaforge-data"
+import { stages } from "@/lib/criteriaforge-data"
+import type { StageId, UiLocale } from "@/lib/criteriaforge/ui-types"
+import { uiText } from "@/lib/criteriaforge/ui-types"
 
 export function CriteriaForgeCommandMenu({
   open,
   onOpenChange,
   onNavigate,
+  locale,
 }: {
   open: boolean
   onOpenChange: (open: boolean) => void
-  onNavigate: (view: "constitution" | "evaluation") => void
+  onNavigate: (view: StageId) => void
+  locale: UiLocale
 }) {
   function select(id: string) {
-    if (id === "constitution" || id === "evaluation") {
-      onNavigate(id)
+    if (stages.some((stage) => stage.id === id)) {
+      onNavigate(id as StageId)
     }
     onOpenChange(false)
   }
@@ -48,18 +52,19 @@ export function CriteriaForgeCommandMenu({
         <CommandList>
           <CommandEmpty>No matching command.</CommandEmpty>
           <CommandGroup heading="Navigate">
-            {viewCommands.map((command) => {
-              const Icon = command.icon
+            {stages.map((stage, index) => {
+              const Icon = stage.icon
+              const id = stage.id as StageId
 
               return (
                 <CommandItem
-                  key={command.id}
-                  value={`${command.label} ${command.id}`}
-                  onSelect={() => select(command.id)}
+                  key={stage.id}
+                  value={`${uiText[locale].stages[id]} ${stage.id}`}
+                  onSelect={() => select(stage.id)}
                 >
                   <Icon />
-                  {command.label}
-                  <CommandShortcut>{command.shortcut}</CommandShortcut>
+                  {uiText[locale].stages[id]}
+                  <CommandShortcut>⌘{index + 1}</CommandShortcut>
                 </CommandItem>
               )
             })}

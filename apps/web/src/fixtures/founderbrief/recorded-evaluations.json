@@ -1,0 +1,741 @@
+{
+  "schemaVersion": "1.0.0",
+  "label": "Replay recorded GPT-5.6 evaluation",
+  "fictionalData": true,
+  "liveExecution": false,
+  "recordedAt": "2026-07-20T18:23:02.435Z",
+  "modelId": "gpt-5.6-sol",
+  "reasoningEffort": "high",
+  "codexVersion": "codex-cli 0.145.0-alpha.2",
+  "constitutionVersion": "1.0",
+  "constitutionId": "founderbrief-constitution-v1",
+  "constitutionHash": "32c3b15ad3b73da540e8df1831831b9747aa6081ff0262a812dc9a547bba855b",
+  "targetVersion": "FounderBrief build 0.1",
+  "targetSnapshotId": "founderbrief-build-v0.1",
+  "targetHash": "ddfbff173040dfe61b2688f528dc021100a7b690f375bd81207421e34ffa93a2",
+  "runCount": 3,
+  "allCitationsLocallyVerified": true,
+  "sourceGitCommit": "6d96808ad324456b270c5e78ec702f6b4f12849e",
+  "aggregation": {
+    "status": "stable",
+    "overall": "not_met",
+    "items": [
+      {
+        "criterionId": "FR-01",
+        "status": "stable",
+        "representative": {
+          "criterionId": "FR-01",
+          "intent": "Preserve every material founder promise and explicit non-goal in the generated build-ready product brief.",
+          "observed": "The founder explicitly prohibited investor material, but the generated brief contains no corresponding non-goal (citations FR01-1 and FR01-2).",
+          "evidence": [
+            {
+              "citationId": "FR01-1",
+              "sourceId": "founder-note",
+              "segmentId": "founder-note-L14-L16",
+              "locator": {
+                "kind": "document",
+                "startLine": 14,
+                "endLine": 16,
+                "startCharacter": 0,
+                "endCharacter": 120,
+                "textHash": "27f8f796c3f8ec5c8b46bb3634bcb3823b5505915026ea514d40216d94c81ddd"
+              },
+              "contentHash": "27f8f796c3f8ec5c8b46bb3634bcb3823b5505915026ea514d40216d94c81ddd",
+              "verified": true,
+              "shareable": false
+            },
+            {
+              "citationId": "FR01-2",
+              "sourceId": "brief-v0.1",
+              "segmentId": "brief-v0.1-L18-L34",
+              "locator": {
+                "kind": "git",
+                "commit": "d9a80f7",
+                "relativePath": "brief-v0.1.md",
+                "startLine": 18,
+                "endLine": 34,
+                "textHash": "c6f1c500dc7cf62b652ce84e8e42f8e0ebc8beeeeff4feb29ba1ff321ffda25f"
+              },
+              "contentHash": "c6f1c500dc7cf62b652ce84e8e42f8e0ebc8beeeeff4feb29ba1ff321ffda25f",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "Add a traceable clause stating that the product produces a build-ready product brief and must not produce investor material or a pitch deck.",
+          "applicability": "applicable",
+          "applicabilityReason": "The evaluated artifact is a generated product brief, and no evidence indicates that the founder superseded the non-goal.",
+          "evidenceStatus": "sufficient",
+          "mustPass": "fail",
+          "uncertainty": "None material; the two allowed evidence items meet the minimum count and directly establish the omission.",
+          "remediationPriority": "critical"
+        },
+        "mustPass": "fail",
+        "reasons": []
+      },
+      {
+        "criterionId": "FR-02",
+        "status": "stable",
+        "representative": {
+          "criterionId": "FR-02",
+          "intent": "Stop generation and ask a plain-language question before resolving any unsettled material decision.",
+          "observed": "The brief introduced team accounts, collaborator invitations, and recurring billing even though these decisions were absent from the founder memo; the product then emitted the final brief without asking about them (citations FR02-1 and FR02-2).",
+          "evidence": [
+            {
+              "citationId": "FR02-1",
+              "sourceId": "brief-v0.1",
+              "segmentId": "brief-v0.1-L62-L81",
+              "locator": {
+                "kind": "git",
+                "commit": "d9a80f7",
+                "relativePath": "brief-v0.1.md",
+                "startLine": 62,
+                "endLine": 81,
+                "textHash": "bd55ecda1912a948c8760a1a5114ec0e301465169b5697f98cb228b6a1891443"
+              },
+              "contentHash": "bd55ecda1912a948c8760a1a5114ec0e301465169b5697f98cb228b6a1891443",
+              "verified": true,
+              "shareable": false
+            },
+            {
+              "citationId": "FR02-2",
+              "sourceId": "browser-trace",
+              "segmentId": "browser-trace-step-6",
+              "locator": {
+                "kind": "web",
+                "observationId": "browser-trace-03",
+                "step": 6,
+                "url": "http://127.0.0.1:4173/generate",
+                "element": "Generate final brief button and resulting document",
+                "screenshotHash": "82b99e30a989cbcb1839e83c72606d27c174f11f3b2c9a357f1b3d959d3689d8"
+              },
+              "contentHash": "d8015cafce2f80e519c5fd0ab23e14b7ca25b8823753ecdcd89b19c10525b8dc",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "Before final generation, stop and ask the founder to decide account type, collaboration boundaries, and billing model; do not present those assumptions as founder decisions.",
+          "applicability": "applicable",
+          "applicabilityReason": "Material product-boundary and commercial-model decisions were unresolved in the founder source but selected in the generated brief (citation FR02-1).",
+          "evidenceStatus": "sufficient",
+          "mustPass": "fail",
+          "uncertainty": "None material; two allowed evidence items establish both the unresolved assumptions and the failure to ask.",
+          "remediationPriority": "critical"
+        },
+        "mustPass": "fail",
+        "reasons": []
+      },
+      {
+        "criterionId": "FR-03",
+        "status": "stable",
+        "representative": {
+          "criterionId": "FR-03",
+          "intent": "Give every material output clause a segment-level citation that opens the exact supporting source location.",
+          "observed": "All nine generated sections use the same document-level link, and none identifies a line, paragraph, or exact excerpt (citation FR03-1).",
+          "evidence": [
+            {
+              "citationId": "FR03-1",
+              "sourceId": "brief-v0.1",
+              "segmentId": "brief-v0.1-citations",
+              "locator": {
+                "kind": "git",
+                "commit": "d9a80f7",
+                "relativePath": "brief-v0.1.md",
+                "startLine": 1,
+                "endLine": 104,
+                "textHash": "a5bae7ec13e772da9c878336d84db19556d7d24b023ad5f69be827f4f5112871"
+              },
+              "contentHash": "a5bae7ec13e772da9c878336d84db19556d7d24b023ad5f69be827f4f5112871",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "Replace generic file links with a distinct source citation for every material clause, identifying the exact line, paragraph, or excerpt.",
+          "applicability": "applicable",
+          "applicabilityReason": "The generated brief contains nine sections with material product clauses, and the evidence does not identify them as pending AI proposals (citation FR03-1).",
+          "evidenceStatus": "sufficient",
+          "mustPass": "not_applicable",
+          "qualityLevel": "insufficient",
+          "uncertainty": "None material; the allowed git evidence meets the minimum count and directly describes citation granularity.",
+          "remediationPriority": "high"
+        },
+        "mustPass": "not_applicable",
+        "qualityLevel": "insufficient",
+        "reasons": []
+      },
+      {
+        "criterionId": "UX-02",
+        "status": "stable",
+        "representative": {
+          "criterionId": "UX-02",
+          "intent": "Enable a first-time non-technical product owner to reach a useful draft within five minutes without recovery assistance or prompt terminology.",
+          "observed": "A clean-browser first-time run completed all seven required actions in 3 minutes 42 seconds without assistance or recovery (citation UX02-1).",
+          "evidence": [
+            {
+              "citationId": "UX02-1",
+              "sourceId": "usability-run-03",
+              "segmentId": "usability-run-03-summary",
+              "locator": {
+                "kind": "web",
+                "observationId": "usability-run-03",
+                "step": 7,
+                "url": "http://127.0.0.1:4173/result",
+                "element": "Completed FounderBrief result",
+                "screenshotHash": "cd36a596c403a7650d6f56d0190bb17d607c20d0b55441bcf3ab550b9753f8d7"
+              },
+              "contentHash": "c4114c336f51f578727a09b30e2100e5ec73d74e2c5942da62ba1d0179e7f9c9",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "No minimum-boundary gap. Exceptional quality is not established because the evidence does not show that the owner correctly explained the result.",
+          "applicability": "applicable",
+          "applicabilityReason": "The evidence explicitly records a clean-browser, first-time task on the primary completion path (citation UX02-1).",
+          "evidenceStatus": "sufficient",
+          "mustPass": "not_applicable",
+          "qualityLevel": "good",
+          "uncertainty": "The run supports good quality; whether the owner could correctly explain the result is not evidenced.",
+          "remediationPriority": "none"
+        },
+        "mustPass": "not_applicable",
+        "qualityLevel": "good",
+        "reasons": []
+      }
+    ],
+    "reasons": []
+  },
+  "runs": [
+    {
+      "runId": "founderbrief-recorded-1",
+      "constitutionVersionId": "founderbrief-constitution-v1",
+      "targetSnapshotId": "founderbrief-build-v0.1",
+      "modelId": "gpt-5.6-sol",
+      "reasoningEffort": "high",
+      "codexVersion": "codex-cli 0.145.0-alpha.2",
+      "promptVersion": "founderbrief-evaluation-v1",
+      "schemaVersion": "1.0.0",
+      "items": [
+        {
+          "criterionId": "FR-01",
+          "intent": "Preserve every material founder promise and explicit non-goal in the generated build-ready product brief.",
+          "observed": "The founder explicitly prohibited investor material, but the generated brief contains no corresponding non-goal (citations FR01-1 and FR01-2).",
+          "evidence": [
+            {
+              "citationId": "FR01-1",
+              "sourceId": "founder-note",
+              "segmentId": "founder-note-L14-L16",
+              "locator": {
+                "kind": "document",
+                "startLine": 14,
+                "endLine": 16,
+                "startCharacter": 0,
+                "endCharacter": 120,
+                "textHash": "27f8f796c3f8ec5c8b46bb3634bcb3823b5505915026ea514d40216d94c81ddd"
+              },
+              "contentHash": "27f8f796c3f8ec5c8b46bb3634bcb3823b5505915026ea514d40216d94c81ddd",
+              "verified": true,
+              "shareable": false
+            },
+            {
+              "citationId": "FR01-2",
+              "sourceId": "brief-v0.1",
+              "segmentId": "brief-v0.1-L18-L34",
+              "locator": {
+                "kind": "git",
+                "commit": "d9a80f7",
+                "relativePath": "brief-v0.1.md",
+                "startLine": 18,
+                "endLine": 34,
+                "textHash": "c6f1c500dc7cf62b652ce84e8e42f8e0ebc8beeeeff4feb29ba1ff321ffda25f"
+              },
+              "contentHash": "c6f1c500dc7cf62b652ce84e8e42f8e0ebc8beeeeff4feb29ba1ff321ffda25f",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "Add a traceable clause stating that the product produces a build-ready product brief and must not produce investor material or a pitch deck.",
+          "applicability": "applicable",
+          "applicabilityReason": "The evaluated artifact is a generated product brief, and no evidence indicates that the founder superseded the non-goal.",
+          "evidenceStatus": "sufficient",
+          "mustPass": "fail",
+          "uncertainty": "None material; the two allowed evidence items meet the minimum count and directly establish the omission.",
+          "remediationPriority": "critical"
+        },
+        {
+          "criterionId": "FR-02",
+          "intent": "Stop generation and ask a plain-language question before resolving any unsettled material decision.",
+          "observed": "The brief introduced team accounts, collaborator invitations, and recurring billing even though these decisions were absent from the founder memo; the product then emitted the final brief without asking about them (citations FR02-1 and FR02-2).",
+          "evidence": [
+            {
+              "citationId": "FR02-1",
+              "sourceId": "brief-v0.1",
+              "segmentId": "brief-v0.1-L62-L81",
+              "locator": {
+                "kind": "git",
+                "commit": "d9a80f7",
+                "relativePath": "brief-v0.1.md",
+                "startLine": 62,
+                "endLine": 81,
+                "textHash": "bd55ecda1912a948c8760a1a5114ec0e301465169b5697f98cb228b6a1891443"
+              },
+              "contentHash": "bd55ecda1912a948c8760a1a5114ec0e301465169b5697f98cb228b6a1891443",
+              "verified": true,
+              "shareable": false
+            },
+            {
+              "citationId": "FR02-2",
+              "sourceId": "browser-trace",
+              "segmentId": "browser-trace-step-6",
+              "locator": {
+                "kind": "web",
+                "observationId": "browser-trace-03",
+                "step": 6,
+                "url": "http://127.0.0.1:4173/generate",
+                "element": "Generate final brief button and resulting document",
+                "screenshotHash": "82b99e30a989cbcb1839e83c72606d27c174f11f3b2c9a357f1b3d959d3689d8"
+              },
+              "contentHash": "d8015cafce2f80e519c5fd0ab23e14b7ca25b8823753ecdcd89b19c10525b8dc",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "Before final generation, stop and ask the founder to decide account type, collaboration boundaries, and billing model; do not present those assumptions as founder decisions.",
+          "applicability": "applicable",
+          "applicabilityReason": "Material product-boundary and commercial-model decisions were unresolved in the founder source but selected in the generated brief (citation FR02-1).",
+          "evidenceStatus": "sufficient",
+          "mustPass": "fail",
+          "uncertainty": "None material; two allowed evidence items establish both the unresolved assumptions and the failure to ask.",
+          "remediationPriority": "critical"
+        },
+        {
+          "criterionId": "FR-03",
+          "intent": "Give every material output clause a segment-level citation that opens the exact supporting source location.",
+          "observed": "All nine generated sections use the same document-level link, and none identifies a line, paragraph, or exact excerpt (citation FR03-1).",
+          "evidence": [
+            {
+              "citationId": "FR03-1",
+              "sourceId": "brief-v0.1",
+              "segmentId": "brief-v0.1-citations",
+              "locator": {
+                "kind": "git",
+                "commit": "d9a80f7",
+                "relativePath": "brief-v0.1.md",
+                "startLine": 1,
+                "endLine": 104,
+                "textHash": "a5bae7ec13e772da9c878336d84db19556d7d24b023ad5f69be827f4f5112871"
+              },
+              "contentHash": "a5bae7ec13e772da9c878336d84db19556d7d24b023ad5f69be827f4f5112871",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "Replace generic file links with a distinct source citation for every material clause, identifying the exact line, paragraph, or excerpt.",
+          "applicability": "applicable",
+          "applicabilityReason": "The generated brief contains nine sections with material product clauses, and the evidence does not identify them as pending AI proposals (citation FR03-1).",
+          "evidenceStatus": "sufficient",
+          "mustPass": "not_applicable",
+          "qualityLevel": "insufficient",
+          "uncertainty": "None material; the allowed git evidence meets the minimum count and directly describes citation granularity.",
+          "remediationPriority": "high"
+        },
+        {
+          "criterionId": "UX-02",
+          "intent": "Enable a first-time non-technical product owner to reach a useful draft within five minutes without recovery assistance or prompt terminology.",
+          "observed": "A clean-browser first-time run completed all seven required actions in 3 minutes 42 seconds without assistance or recovery (citation UX02-1).",
+          "evidence": [
+            {
+              "citationId": "UX02-1",
+              "sourceId": "usability-run-03",
+              "segmentId": "usability-run-03-summary",
+              "locator": {
+                "kind": "web",
+                "observationId": "usability-run-03",
+                "step": 7,
+                "url": "http://127.0.0.1:4173/result",
+                "element": "Completed FounderBrief result",
+                "screenshotHash": "cd36a596c403a7650d6f56d0190bb17d607c20d0b55441bcf3ab550b9753f8d7"
+              },
+              "contentHash": "c4114c336f51f578727a09b30e2100e5ec73d74e2c5942da62ba1d0179e7f9c9",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "No minimum-boundary gap. Exceptional quality is not established because the evidence does not show that the owner correctly explained the result.",
+          "applicability": "applicable",
+          "applicabilityReason": "The evidence explicitly records a clean-browser, first-time task on the primary completion path (citation UX02-1).",
+          "evidenceStatus": "sufficient",
+          "mustPass": "not_applicable",
+          "qualityLevel": "good",
+          "uncertainty": "The run supports good quality; whether the owner could correctly explain the result is not evidenced.",
+          "remediationPriority": "none"
+        }
+      ],
+      "startedAt": "2026-07-20T18:21:13.084Z",
+      "completedAt": "2026-07-20T18:21:49.616Z"
+    },
+    {
+      "runId": "founderbrief-recorded-2",
+      "constitutionVersionId": "founderbrief-constitution-v1",
+      "targetSnapshotId": "founderbrief-build-v0.1",
+      "modelId": "gpt-5.6-sol",
+      "reasoningEffort": "high",
+      "codexVersion": "codex-cli 0.145.0-alpha.2",
+      "promptVersion": "founderbrief-evaluation-v1",
+      "schemaVersion": "1.0.0",
+      "items": [
+        {
+          "criterionId": "FR-01",
+          "intent": "Preserve every material promise and explicit non-goal from the founder’s source in the generated build-ready brief.",
+          "observed": "The founder explicitly prohibited investor material, but the generated brief omitted that non-goal. [FR01-C1] [FR01-C2]",
+          "evidence": [
+            {
+              "citationId": "FR01-C1",
+              "sourceId": "founder-note",
+              "segmentId": "founder-note-L14-L16",
+              "locator": {
+                "kind": "document",
+                "startLine": 14,
+                "endLine": 16,
+                "startCharacter": 0,
+                "endCharacter": 120,
+                "textHash": "27f8f796c3f8ec5c8b46bb3634bcb3823b5505915026ea514d40216d94c81ddd"
+              },
+              "contentHash": "27f8f796c3f8ec5c8b46bb3634bcb3823b5505915026ea514d40216d94c81ddd",
+              "verified": true,
+              "shareable": false
+            },
+            {
+              "citationId": "FR01-C2",
+              "sourceId": "brief-v0.1",
+              "segmentId": "brief-v0.1-L18-L34",
+              "locator": {
+                "kind": "git",
+                "commit": "d9a80f7",
+                "relativePath": "brief-v0.1.md",
+                "startLine": 18,
+                "endLine": 34,
+                "textHash": "c6f1c500dc7cf62b652ce84e8e42f8e0ebc8beeeeff4feb29ba1ff321ffda25f"
+              },
+              "contentHash": "c6f1c500dc7cf62b652ce84e8e42f8e0ebc8beeeeff4feb29ba1ff321ffda25f",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "Add an explicit, traceable clause stating that FounderBrief produces a build-ready product brief and does not produce investor material or pitch decks.",
+          "applicability": "applicable",
+          "applicabilityReason": "The evidence contains both a founder source statement and a generated product brief, so this is a FounderBrief build-brief generation case. [FR01-C1] [FR01-C2]",
+          "evidenceStatus": "sufficient",
+          "mustPass": "fail",
+          "uncertainty": "None material; two allowed evidence items directly establish the governing non-goal and its omission.",
+          "remediationPriority": "critical"
+        },
+        {
+          "criterionId": "FR-02",
+          "intent": "Stop and ask the founder before selecting an unresolved audience, commercial model, or product boundary.",
+          "observed": "The generated brief introduced team accounts, collaboration, and recurring billing even though those decisions were absent from the founder memo; the product then emitted the final brief without asking about them. [FR02-C1] [FR02-C2]",
+          "evidence": [
+            {
+              "citationId": "FR02-C1",
+              "sourceId": "brief-v0.1",
+              "segmentId": "brief-v0.1-L62-L81",
+              "locator": {
+                "kind": "git",
+                "commit": "d9a80f7",
+                "relativePath": "brief-v0.1.md",
+                "startLine": 62,
+                "endLine": 81,
+                "textHash": "bd55ecda1912a948c8760a1a5114ec0e301465169b5697f98cb228b6a1891443"
+              },
+              "contentHash": "bd55ecda1912a948c8760a1a5114ec0e301465169b5697f98cb228b6a1891443",
+              "verified": true,
+              "shareable": false
+            },
+            {
+              "citationId": "FR02-C2",
+              "sourceId": "browser-trace",
+              "segmentId": "browser-trace-step-6",
+              "locator": {
+                "kind": "web",
+                "observationId": "browser-trace-03",
+                "step": 6,
+                "url": "http://127.0.0.1:4173/generate",
+                "element": "Generate final brief button and resulting document",
+                "screenshotHash": "82b99e30a989cbcb1839e83c72606d27c174f11f3b2c9a357f1b3d959d3689d8"
+              },
+              "contentHash": "d8015cafce2f80e519c5fd0ab23e14b7ca25b8823753ecdcd89b19c10525b8dc",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "Block final generation and ask one plain-language question before deciding account type, collaboration boundaries, or billing model.",
+          "applicability": "applicable",
+          "applicabilityReason": "Material product and commercial decisions were not settled in the founder memo but were selected in the generated output. [FR02-C1]",
+          "evidenceStatus": "sufficient",
+          "mustPass": "fail",
+          "uncertainty": "None material; the allowed git and web evidence directly establish both the unresolved decisions and the absence of a question.",
+          "remediationPriority": "critical"
+        },
+        {
+          "criterionId": "FR-03",
+          "intent": "Give every material output clause a segment-level citation that opens its exact supporting source location.",
+          "observed": "All nine generated sections use only a document-level link; none identifies a line, paragraph, or exact excerpt. [FR03-C1]",
+          "evidence": [
+            {
+              "citationId": "FR03-C1",
+              "sourceId": "brief-v0.1",
+              "segmentId": "brief-v0.1-citations",
+              "locator": {
+                "kind": "git",
+                "commit": "d9a80f7",
+                "relativePath": "brief-v0.1.md",
+                "startLine": 1,
+                "endLine": 104,
+                "textHash": "a5bae7ec13e772da9c878336d84db19556d7d24b023ad5f69be827f4f5112871"
+              },
+              "contentHash": "a5bae7ec13e772da9c878336d84db19556d7d24b023ad5f69be827f4f5112871",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "Replace generic document links with a distinct segment-level citation for every material clause, identifying the exact supporting line, paragraph, excerpt, or code range.",
+          "applicability": "applicable",
+          "applicabilityReason": "The generated brief contains nine sections with source links, and the citation audit covers the generated document. [FR03-C1]",
+          "evidenceStatus": "sufficient",
+          "mustPass": "not_applicable",
+          "qualityLevel": "insufficient",
+          "uncertainty": "None material; the single allowed git excerpt satisfies the minimum evidence count and directly characterizes citation granularity.",
+          "remediationPriority": "high"
+        },
+        {
+          "criterionId": "UX-02",
+          "intent": "Enable a first-time, non-technical product owner to reach a useful draft within five minutes without recovery assistance.",
+          "observed": "A clean-browser first-time run completed all seven required actions in 3 minutes 42 seconds without assistance or recovery. [UX02-C1]",
+          "evidence": [
+            {
+              "citationId": "UX02-C1",
+              "sourceId": "usability-run-03",
+              "segmentId": "usability-run-03-summary",
+              "locator": {
+                "kind": "web",
+                "observationId": "usability-run-03",
+                "step": 7,
+                "url": "http://127.0.0.1:4173/result",
+                "element": "Completed FounderBrief result",
+                "screenshotHash": "cd36a596c403a7650d6f56d0190bb17d607c20d0b55441bcf3ab550b9753f8d7"
+              },
+              "contentHash": "c4114c336f51f578727a09b30e2100e5ec73d74e2c5942da62ba1d0179e7f9c9",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "No gap against the good-quality definition; exceptional quality is not established because the evidence does not show that the owner correctly explained the result.",
+          "applicability": "applicable",
+          "applicabilityReason": "The evidence explicitly records a clean-browser, first-time task reaching the completed result. [UX02-C1]",
+          "evidenceStatus": "sufficient",
+          "mustPass": "not_applicable",
+          "qualityLevel": "good",
+          "uncertainty": "The evidence establishes time, action completion, and absence of recovery, but does not assess the participant’s technical background or ability to explain the result.",
+          "remediationPriority": "none"
+        }
+      ],
+      "startedAt": "2026-07-20T18:21:49.901Z",
+      "completedAt": "2026-07-20T18:22:24.564Z"
+    },
+    {
+      "runId": "founderbrief-recorded-3",
+      "constitutionVersionId": "founderbrief-constitution-v1",
+      "targetSnapshotId": "founderbrief-build-v0.1",
+      "modelId": "gpt-5.6-sol",
+      "reasoningEffort": "high",
+      "codexVersion": "codex-cli 0.145.0-alpha.2",
+      "promptVersion": "founderbrief-evaluation-v1",
+      "schemaVersion": "1.0.0",
+      "items": [
+        {
+          "criterionId": "FR-01",
+          "intent": "Preserve every material promise and explicit non-goal from the founder’s source in the generated build-ready brief.",
+          "observed": "The founder explicitly prohibited investor material, but the generated brief omits that non-goal.",
+          "evidence": [
+            {
+              "citationId": "CIT-FR-01-01",
+              "sourceId": "founder-note",
+              "segmentId": "founder-note-L14-L16",
+              "locator": {
+                "kind": "document",
+                "startLine": 14,
+                "endLine": 16,
+                "startCharacter": 0,
+                "endCharacter": 120,
+                "textHash": "27f8f796c3f8ec5c8b46bb3634bcb3823b5505915026ea514d40216d94c81ddd"
+              },
+              "contentHash": "27f8f796c3f8ec5c8b46bb3634bcb3823b5505915026ea514d40216d94c81ddd",
+              "verified": true,
+              "shareable": false
+            },
+            {
+              "citationId": "CIT-FR-01-02",
+              "sourceId": "brief-v0.1",
+              "segmentId": "brief-v0.1-L18-L34",
+              "locator": {
+                "kind": "git",
+                "commit": "d9a80f7",
+                "relativePath": "brief-v0.1.md",
+                "startLine": 18,
+                "endLine": 34,
+                "textHash": "c6f1c500dc7cf62b652ce84e8e42f8e0ebc8beeeeff4feb29ba1ff321ffda25f"
+              },
+              "contentHash": "c6f1c500dc7cf62b652ce84e8e42f8e0ebc8beeeeff4feb29ba1ff321ffda25f",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "Add a traceable clause stating that the product creates a build-ready product brief and must not produce investor material or a pitch deck.",
+          "applicability": "applicable",
+          "applicabilityReason": "FounderBrief generated a product brief, and no evidence indicates that the founder superseded the stated non-goal.",
+          "evidenceStatus": "sufficient",
+          "mustPass": "fail",
+          "uncertainty": "None identified in the supplied evidence.",
+          "remediationPriority": "critical"
+        },
+        {
+          "criterionId": "FR-02",
+          "intent": "Stop and ask the founder before selecting an unresolved audience, commercial model, or product boundary.",
+          "observed": "The final brief introduced team accounts, collaborators, and recurring billing even though those decisions were absent from the founder memo; generation completed without asking about them.",
+          "evidence": [
+            {
+              "citationId": "CIT-FR-02-01",
+              "sourceId": "brief-v0.1",
+              "segmentId": "brief-v0.1-L62-L81",
+              "locator": {
+                "kind": "git",
+                "commit": "d9a80f7",
+                "relativePath": "brief-v0.1.md",
+                "startLine": 62,
+                "endLine": 81,
+                "textHash": "bd55ecda1912a948c8760a1a5114ec0e301465169b5697f98cb228b6a1891443"
+              },
+              "contentHash": "bd55ecda1912a948c8760a1a5114ec0e301465169b5697f98cb228b6a1891443",
+              "verified": true,
+              "shareable": false
+            },
+            {
+              "citationId": "CIT-FR-02-02",
+              "sourceId": "browser-trace",
+              "segmentId": "browser-trace-step-6",
+              "locator": {
+                "kind": "web",
+                "observationId": "browser-trace-03",
+                "step": 6,
+                "url": "http://127.0.0.1:4173/generate",
+                "element": "Generate final brief button and resulting document",
+                "screenshotHash": "82b99e30a989cbcb1839e83c72606d27c174f11f3b2c9a357f1b3d959d3689d8"
+              },
+              "contentHash": "d8015cafce2f80e519c5fd0ab23e14b7ca25b8823753ecdcd89b19c10525b8dc",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "Before final generation, stop and ask a plain-language question resolving account type, collaboration boundaries, and billing model.",
+          "applicability": "applicable",
+          "applicabilityReason": "Material product and commercial decisions were unresolved in the founder memo but were selected in the final brief.",
+          "evidenceStatus": "sufficient",
+          "mustPass": "fail",
+          "uncertainty": "None identified in the supplied evidence.",
+          "remediationPriority": "critical"
+        },
+        {
+          "criterionId": "FR-03",
+          "intent": "Give every material output clause a citation that opens the exact supporting source segment.",
+          "observed": "All nine generated sections use the same document-level source link, with no line, paragraph, or exact excerpt.",
+          "evidence": [
+            {
+              "citationId": "CIT-FR-03-01",
+              "sourceId": "brief-v0.1",
+              "segmentId": "brief-v0.1-citations",
+              "locator": {
+                "kind": "git",
+                "commit": "d9a80f7",
+                "relativePath": "brief-v0.1.md",
+                "startLine": 1,
+                "endLine": 104,
+                "textHash": "a5bae7ec13e772da9c878336d84db19556d7d24b023ad5f69be827f4f5112871"
+              },
+              "contentHash": "a5bae7ec13e772da9c878336d84db19556d7d24b023ad5f69be827f4f5112871",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "Replace generic document links with segment-level citations for every material clause.",
+          "applicability": "applicable",
+          "applicabilityReason": "The generated brief contains nine material sections presented as output rather than explicitly labelled pending AI proposals.",
+          "evidenceStatus": "sufficient",
+          "mustPass": "not_applicable",
+          "qualityLevel": "insufficient",
+          "uncertainty": "None identified in the supplied evidence.",
+          "remediationPriority": "high"
+        },
+        {
+          "criterionId": "UX-02",
+          "intent": "Enable a first-time, non-technical product owner to reach a useful draft within five minutes and without recovery assistance.",
+          "observed": "A clean-browser first-time run completed all seven required actions in 3 minutes 42 seconds without assistance or recovery.",
+          "evidence": [
+            {
+              "citationId": "CIT-UX-02-01",
+              "sourceId": "usability-run-03",
+              "segmentId": "usability-run-03-summary",
+              "locator": {
+                "kind": "web",
+                "observationId": "usability-run-03",
+                "step": 7,
+                "url": "http://127.0.0.1:4173/result",
+                "element": "Completed FounderBrief result",
+                "screenshotHash": "cd36a596c403a7650d6f56d0190bb17d607c20d0b55441bcf3ab550b9753f8d7"
+              },
+              "contentHash": "c4114c336f51f578727a09b30e2100e5ec73d74e2c5942da62ba1d0179e7f9c9",
+              "verified": true,
+              "shareable": false
+            }
+          ],
+          "gap": "No gap against the good-quality definition. Exceptional quality is not established because the evidence does not show that the owner correctly explained the result.",
+          "applicability": "applicable",
+          "applicabilityReason": "The evidence records a clean-browser, first-time completion of the primary path.",
+          "evidenceStatus": "sufficient",
+          "mustPass": "not_applicable",
+          "qualityLevel": "good",
+          "uncertainty": "The evidence does not assess whether the owner correctly explained the result.",
+          "remediationPriority": "none"
+        }
+      ],
+      "startedAt": "2026-07-20T18:22:24.846Z",
+      "completedAt": "2026-07-20T18:23:02.394Z"
+    }
+  ],
+  "runMetadata": [
+    {
+      "runId": "24fb8274-b6a5-4b7d-a187-b2f50f154d16",
+      "inputHash": "3c8ff4e3eb1d99efc2f942f96a470233343140ebf2d3d0b6ddf953edd8a0ae88",
+      "outputHash": "d91399917fa8b47a94721ca96428a5d024c9eaa2920a7325528209c9fa44ae3a",
+      "schemaHash": "ea3f0da209cd2163a72ac1c61b59436825eebcb052764edaaf8ac3264491878b",
+      "retryCount": 0,
+      "startedAt": "2026-07-20T18:21:13.084Z",
+      "completedAt": "2026-07-20T18:21:49.616Z"
+    },
+    {
+      "runId": "85fd89aa-1b6a-4d62-b3fb-2532ebb78783",
+      "inputHash": "3c8ff4e3eb1d99efc2f942f96a470233343140ebf2d3d0b6ddf953edd8a0ae88",
+      "outputHash": "34f06e6150ed5a66a3968a6a122a8f22efa8159e61b1625b7fcb3d1cc868786e",
+      "schemaHash": "ea3f0da209cd2163a72ac1c61b59436825eebcb052764edaaf8ac3264491878b",
+      "retryCount": 0,
+      "startedAt": "2026-07-20T18:21:49.901Z",
+      "completedAt": "2026-07-20T18:22:24.564Z"
+    },
+    {
+      "runId": "2a0b781a-d624-49f4-9116-34638444ce38",
+      "inputHash": "3c8ff4e3eb1d99efc2f942f96a470233343140ebf2d3d0b6ddf953edd8a0ae88",
+      "outputHash": "dcbd89c83ffbe51af7dff3122953cd55135bb46fe0683947ab3a141bde0a1c33",
+      "schemaHash": "ea3f0da209cd2163a72ac1c61b59436825eebcb052764edaaf8ac3264491878b",
+      "retryCount": 0,
+      "startedAt": "2026-07-20T18:22:24.846Z",
+      "completedAt": "2026-07-20T18:23:02.394Z"
+    }
+  ]
+}

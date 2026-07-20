@@ -11,6 +11,7 @@ import {
   Scale,
   Sparkles,
 } from "lucide-react"
+import recordedFounderBrief from "@/fixtures/founderbrief/recorded-evaluations.json"
 
 export type Stage = {
   id: string
@@ -262,67 +263,74 @@ export type EvaluationCriterion = {
   status: "pass" | "fail" | "insufficient"
 }
 
-export const evaluationCriteria: EvaluationCriterion[] = [
-  {
-    id: "FR-01",
-    title: "Preserve the founder’s stated intent",
-    kind: "must-pass",
-    intent:
-      "Every material promise in the source brief remains visible in the generated Codex brief.",
-    observed:
-      "The generated brief keeps the target user and output format, but removes the non-goal about investor materials.",
-    evidence:
-      "Source sentence 14 compared with generated brief section 2. No matching clause was found.",
-    source: "founder-note.txt:14 → brief-v0.1.md:18–34",
-    gap:
-      "One explicit non-goal was dropped, which lets Codex widen the product beyond the founder’s intent.",
-    status: "fail",
-  },
-  {
-    id: "FR-02",
-    title: "Ask before making a material assumption",
-    kind: "must-pass",
-    intent:
-      "If audience, outcome, or exclusion is unresolved, FounderBrief asks before generating the final brief.",
-    observed:
-      "The product inferred a team account and recurring billing without asking the founder.",
-    evidence:
-      "Browser trace step 6 and output sections 5–6 introduce two unsupported decisions.",
-    source: "browser-trace.json:step-6 → brief-v0.1.md:62–81",
-    gap:
-      "The output presents two AI assumptions as founder decisions.",
-    status: "fail",
-  },
-  {
-    id: "FR-03",
-    title: "Trace output back to source",
-    kind: "quality",
-    intent:
-      "A reviewer can inspect which source statement supports each material part of the brief.",
-    observed:
-      "The brief links to the uploaded file, but not to the sentence or time range supporting each claim.",
-    evidence:
-      "All nine generated sections use the same document-level citation.",
-    source: "brief-v0.1.md:1–104",
-    gap:
-      "Document-level links do not let the owner verify whether a claim was preserved or invented.",
-    status: "insufficient",
-  },
-  {
-    id: "UX-02",
-    title: "Reach a useful first result without setup knowledge",
-    kind: "quality",
-    intent:
-      "A first-time non-technical owner can reach a useful draft in five minutes without knowing prompt terminology.",
-    observed:
-      "The primary path finishes in 3m 42s and every required field has plain-language guidance.",
-    evidence:
-      "Clean-browser task trace; 7 of 7 required actions completed without recovery.",
-    source: "usability-run-03.json · recording 00:00–03:42",
-    gap: "No material gap observed.",
-    status: "pass",
-  },
-]
+const criterionTitles: Record<string, string> = {
+  "FR-01": "Preserve the founder’s stated intent",
+  "FR-02": "Ask before making a material assumption",
+  "FR-03": "Trace output back to source",
+  "UX-02": "Reach a useful first result without setup knowledge",
+}
+
+function citationLabel(citation: {
+  sourceId: string
+  segmentId: string
+  locator: Record<string, unknown>
+}): string {
+  const locator = citation.locator
+  if (locator.kind === "document") {
+    return `${citation.sourceId}:${String(locator.startLine)}–${String(
+      locator.endLine
+    )}`
+  }
+  if (locator.kind === "git") {
+    return `${String(locator.relativePath)}:${String(
+      locator.startLine
+    )}–${String(locator.endLine)}`
+  }
+  if (locator.kind === "web") {
+    return `${citation.sourceId}:step-${String(locator.step)}`
+  }
+  return `${citation.sourceId}:${citation.segmentId}`
+}
+
+export const evaluationCriteria: EvaluationCriterion[] =
+  recordedFounderBrief.aggregation.items.map((aggregated) => {
+    const item = aggregated.representative
+    if (!item) {
+      throw new Error(
+        `Recorded evaluation is missing representative item ${aggregated.criterionId}`
+      )
+    }
+    const kind =
+      aggregated.criterionId === "FR-01" ||
+      aggregated.criterionId === "FR-02"
+        ? ("must-pass" as const)
+        : ("quality" as const)
+    const status: EvaluationCriterion["status"] =
+      aggregated.mustPass === "fail"
+        ? "fail"
+        : aggregated.qualityLevel === "insufficient"
+          ? "insufficient"
+          : "pass"
+    return {
+      id: aggregated.criterionId,
+      title:
+        criterionTitles[aggregated.criterionId] ?? aggregated.criterionId,
+      kind,
+      intent: item.intent,
+      observed: item.observed,
+      evidence: item.evidence
+        .map(
+          (citation) =>
+            `${citationLabel(citation)} · ${
+              citation.verified ? "hash verified" : "unverified"
+            }`
+        )
+        .join("; "),
+      source: item.evidence.map(citationLabel).join(" → "),
+      gap: item.gap,
+      status,
+    }
+  })
 
 export const viewCommands = [
   {

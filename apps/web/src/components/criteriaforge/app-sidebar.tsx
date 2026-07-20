@@ -8,6 +8,7 @@ import {
   HardDrive,
   Languages,
   MoreHorizontal,
+  Radio,
 } from "lucide-react"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -35,8 +36,34 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { stages } from "@/lib/criteriaforge-data"
+import {
+  STAGE_ORDER,
+  type StageId,
+  type UiLocale,
+  uiText,
+} from "@/lib/criteriaforge/ui-types"
 
-export function CriteriaForgeSidebar() {
+export function CriteriaForgeSidebar({
+  activeStage,
+  onStageChange,
+  locale,
+  demo,
+  projectName,
+  sourceCount,
+  codexReady,
+  onOpenDiagnostics,
+}: {
+  activeStage: StageId
+  onStageChange: (stage: StageId) => void
+  locale: UiLocale
+  demo: boolean
+  projectName: string
+  sourceCount: number
+  codexReady: boolean
+  onOpenDiagnostics: () => void
+}) {
+  const text = uiText[locale]
+  const activeIndex = STAGE_ORDER.indexOf(activeStage)
   return (
     <Sidebar
       collapsible="offcanvas"
@@ -51,7 +78,7 @@ export function CriteriaForgeSidebar() {
             variant="outline"
             className="border-sidebar-foreground/15 bg-sidebar-foreground/5 font-mono text-[9px] tracking-[0.14em] text-sidebar-foreground/60"
           >
-            LOCAL
+            {demo ? "RECORDED" : "LOCAL"}
           </Badge>
         </div>
 
@@ -69,13 +96,13 @@ export function CriteriaForgeSidebar() {
             </span>
             <span className="min-w-0 flex-1">
               <span className="block truncate text-sm font-medium">
-                CriteriaForge
+                {projectName}
               </span>
-              <span className="block truncate font-mono text-[10px] text-sidebar-foreground/50">
-                constitution v0.3
+              <span className="block truncate font-mono text-[10px] text-sidebar-foreground/65">
+                {demo ? "FounderBrief · fictional" : "private local case"}
               </span>
             </span>
-            <ChevronsUpDown className="size-4 text-sidebar-foreground/50" />
+            <ChevronsUpDown className="size-4 text-sidebar-foreground/65" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-64">
             <DropdownMenuLabel>Current project</DropdownMenuLabel>
@@ -86,7 +113,7 @@ export function CriteriaForgeSidebar() {
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Languages />
-              English / 日本語
+              {text.languageName}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -94,21 +121,23 @@ export function CriteriaForgeSidebar() {
 
       <SidebarContent>
         <SidebarGroup className="px-3 py-4">
-          <SidebarGroupLabel className="px-2 font-mono text-[10px] uppercase tracking-[0.16em] text-sidebar-foreground/45">
+          <SidebarGroupLabel className="px-2 font-mono text-[10px] uppercase tracking-[0.16em] text-sidebar-foreground/65">
             Build loop
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="gap-1">
               {stages.map((stage, index) => {
                 const Icon = stage.icon
-                const isCurrent = stage.state === "current"
-                const isComplete = stage.state === "complete"
+                const stageId = stage.id as StageId
+                const isCurrent = stageId === activeStage
+                const isComplete = index < activeIndex
 
                 return (
                   <SidebarMenuItem key={stage.id}>
                     <SidebarMenuButton
                       isActive={isCurrent}
                       tooltip={stage.label}
+                      onClick={() => onStageChange(stageId)}
                       className="h-auto min-h-11 items-start gap-3 py-2.5 data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground"
                     >
                       <span className="relative mt-0.5 flex size-6 shrink-0 items-center justify-center">
@@ -121,20 +150,20 @@ export function CriteriaForgeSidebar() {
                               ? "text-ember"
                               : isComplete
                                 ? "text-approved"
-                                : "text-sidebar-foreground/45"
+                                : "text-sidebar-foreground/65"
                           }
                         />
                       </span>
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-[13px] font-medium">
-                          {stage.label}
+                          {text.stages[stageId]}
                         </span>
-                        <span className="mt-0.5 block line-clamp-2 text-[10px] leading-relaxed text-sidebar-foreground/45">
+                        <span className="mt-0.5 block line-clamp-2 text-[10px] leading-relaxed text-sidebar-foreground/65">
                           {stage.description}
                         </span>
                       </span>
                     </SidebarMenuButton>
-                    <SidebarMenuBadge className="font-mono text-[9px] text-sidebar-foreground/35">
+                    <SidebarMenuBadge className="font-mono text-[9px] text-sidebar-foreground/65">
                       {String(index + 1).padStart(2, "0")}
                     </SidebarMenuBadge>
                   </SidebarMenuItem>
@@ -145,7 +174,7 @@ export function CriteriaForgeSidebar() {
         </SidebarGroup>
 
         <SidebarGroup className="mt-auto px-3 pb-4">
-          <SidebarGroupLabel className="px-2 font-mono text-[10px] uppercase tracking-[0.16em] text-sidebar-foreground/45">
+          <SidebarGroupLabel className="px-2 font-mono text-[10px] uppercase tracking-[0.16em] text-sidebar-foreground/65">
             Workspace
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -153,16 +182,23 @@ export function CriteriaForgeSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton tooltip="Private evidence store">
                   <HardDrive className="text-sidebar-foreground/55" />
-                  <span>Private evidence</span>
+                  <span>{demo ? "Fictional evidence" : "Private evidence"}</span>
                 </SidebarMenuButton>
-                <SidebarMenuBadge className="text-sidebar-foreground/50">
-                  14
+                <SidebarMenuBadge className="text-sidebar-foreground/65">
+                  {sourceCount}
                 </SidebarMenuBadge>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Local status">
-                  <CircleCheck className="text-approved" />
-                  <span>Saved locally</span>
+                <SidebarMenuButton
+                  tooltip="System diagnostics"
+                  onClick={onOpenDiagnostics}
+                >
+                  {demo ? (
+                    <Radio className="text-evidence" />
+                  ) : (
+                    <CircleCheck className="text-approved" />
+                  )}
+                  <span>{demo ? "Recorded result" : "Saved locally"}</span>
                 </SidebarMenuButton>
                 <SidebarMenuAction aria-label="More local storage options">
                   <MoreHorizontal />
@@ -182,9 +218,17 @@ export function CriteriaForgeSidebar() {
           </Avatar>
           <div className="min-w-0 flex-1">
             <p className="truncate text-xs font-medium">Constitution Owner</p>
-            <p className="flex items-center gap-1 truncate text-[10px] text-sidebar-foreground/45">
-              <CircleDashed className="size-3" />
-              ChatGPT sign-in pending
+            <p className="flex items-center gap-1 truncate text-[10px] text-sidebar-foreground/65">
+              {codexReady ? (
+                <CircleCheck className="size-3 text-approved" />
+              ) : (
+                <CircleDashed className="size-3" />
+              )}
+              {demo
+                ? "No account required"
+                : codexReady
+                  ? "ChatGPT OAuth ready"
+                  : "Check Codex sign-in"}
             </p>
           </div>
         </div>

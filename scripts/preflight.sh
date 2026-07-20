@@ -6,6 +6,8 @@ cd "$ROOT"
 
 required_files=(
   "README.md"
+  "LICENSE"
+  ".nvmrc"
   "AGENTS.md"
   "docs/requirements.md"
   "docs/build-log.md"
@@ -38,4 +40,3 @@ done
 ./scripts/check-secrets.sh
 
 printf 'Preflight passed: structure, shell syntax, and secret checks are clean.\n'
-
