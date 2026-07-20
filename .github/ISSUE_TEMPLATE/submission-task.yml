@@ -1,0 +1,30 @@
+name: Submission task
+description: Track one implementation, evidence, demo, or release task.
+title: "[Submission] "
+labels:
+  - submission
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: 完了時に実現している状態
+      description: 作業内容ではなく、確認できる完了状態を書く。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 確認方法
+      description: コマンド、入力、期待結果、動画に映す箇所を具体的に書く。
+    validations:
+      required: true
+  - type: checkboxes
+    id: criteria
+    attributes:
+      label: 関係する審査観点
+      options:
+        - label: 技術実装
+        - label: 設計
+        - label: 潜在的な影響
+        - label: アイデアの質
+
