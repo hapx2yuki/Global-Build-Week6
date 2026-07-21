@@ -106,13 +106,6 @@ import {
   uiText,
 } from "@/lib/criteriaforge/ui-types"
 
-function initialLocale(): UiLocale {
-  if (typeof window === "undefined") return "en"
-  const stored = window.localStorage.getItem("criteriaforge.locale")
-  if (stored === "en" || stored === "ja") return stored
-  return "en"
-}
-
 const sectionTitles: Record<string, string> = {
   purpose: "Why this product exists",
   experience: "Promised experience",
@@ -217,7 +210,7 @@ export function WorkspaceShell() {
   const demo = process.env.NEXT_PUBLIC_CRITERIAFORGE_MODE !== "local"
   const local = useLocalWorkspace(!demo)
   const [activeStage, setActiveStage] = React.useState<StageId>("intent")
-  const [locale, setLocale] = React.useState<UiLocale>(initialLocale)
+  const [locale, setLocale] = React.useState<UiLocale>("en")
   const [commandOpen, setCommandOpen] = React.useState(false)
   const [questionOpen, setQuestionOpen] = React.useState(false)
   const [compileOpen, setCompileOpen] = React.useState(false)
@@ -238,6 +231,16 @@ export function WorkspaceShell() {
   const [selectedSegmentIds, setSelectedSegmentIds] = React.useState<string[]>(
     []
   )
+
+  React.useEffect(() => {
+    const stored = window.localStorage.getItem("criteriaforge.locale")
+    if (stored !== "en" && stored !== "ja") return
+    const frame = window.requestAnimationFrame(() => {
+      setLocale(stored)
+      document.documentElement.lang = stored
+    })
+    return () => window.cancelAnimationFrame(frame)
+  }, [])
   const [evaluationSegments, setEvaluationSegments] = React.useState<
     LocalEvidenceSegment[]
   >([])
