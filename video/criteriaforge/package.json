@@ -1,0 +1,26 @@
+{
+  "name": "criteriaforge-remotion-video",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "assets": "node scripts/prepare-assets.mjs",
+    "studio": "npm run assets && remotion studio src/index.ts",
+    "render": "npm run assets && remotion render src/index.ts CriteriaForgeRich ../../output/criteriaforge-demo/criteriaforge-remotion.mp4 --codec=h264 --pixel-format=yuv420p --crf=18 --audio-bitrate=192k --concurrency=50%",
+    "render:still": "npm run assets && remotion still src/index.ts CriteriaForgeRich ../../output/criteriaforge-demo/criteriaforge-remotion-poster.png --frame=84",
+    "check": "npm run assets && tsc --noEmit && remotion compositions src/index.ts",
+    "license:check": "node scripts/check-licenses.mjs"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.495",
+    "@remotion/media": "4.0.495",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "remotion": "4.0.495"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "typescript": "^5.9.3"
+  }
+}

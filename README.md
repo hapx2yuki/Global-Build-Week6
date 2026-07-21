@@ -65,6 +65,7 @@ The bounded worktree engine and its local repair/re-evaluation screens are imple
 make preflight
 make web-check
 make demo-check
+make video-check
 
 cd apps/web
 npm run test:e2e
@@ -73,6 +74,8 @@ npm run license:check
 ```
 
 The current automated suite contains 65 unit/integration checks and four public desktop/mobile browser runs. It covers the data contracts, five compile safeguards, immutable storage and migration, semantic invalidation, four-layer aggregation, evidence parsing and malicious inputs, OAuth/Codex structured output behavior, citation verification, private export, bounded Git remediation, desktop/mobile navigation, keyboard use, console errors, and critical/serious accessibility violations. Separate opt-in local browser checks exercise intake, restart recovery, three-run calibration/compilation, and three-run formal evaluation with an authenticated Codex CLI.
+
+The sub-three-minute demo film has versioned [Remotion source](video/criteriaforge/README.md). It uses a time-checked draft narration, burned-in captions, and actual public/local CriteriaForge screens; all motion and scene timing are frame-driven. Captures, narration, and rendered media remain in the ignored local output area, so a clean clone needs those reviewed inputs before rendering. The current draft voice must be replaced with a narration source whose public-use terms are verified before YouTube publication.
 
 ## Architecture
 

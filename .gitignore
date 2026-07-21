@@ -23,6 +23,7 @@ tmp/
 .tmp/
 .playwright-cli/
 output/
+video/criteriaforge/public/
 
 # Common JavaScript outputs
 node_modules/

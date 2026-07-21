@@ -1,6 +1,6 @@
 SHELL := /usr/bin/env bash
 
-.PHONY: setup preflight web-check demo-check submission-check secret-check status
+.PHONY: setup preflight web-check demo-check video-check submission-check secret-check status
 
 setup:
 	@./scripts/setup.sh
@@ -13,6 +13,9 @@ web-check:
 
 demo-check:
 	@cd apps/web && npm run build:demo
+
+video-check:
+	@cd video/criteriaforge && npm run check && npm run license:check && npm audit --audit-level=high
 
 submission-check:
 	@./scripts/check-submission.sh
