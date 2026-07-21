@@ -15,3 +15,13 @@
 | Sharp / libvips | 画像無害化・変換 | https://sharp.pixelplumbing.com/ | 0.35.3 / 1.3.2 | Apache-2.0、libvips動的実行物はLGPL-3.0-or-later | SVGを生HTMLで描画せず画像化 | `apps/web` の端末内根拠処理 | 2026-07-21 |
 | npm依存物一式 | 実行・開発依存 | `apps/web/package-lock.json` | lockfileを正とする | `npm run license:check`で未知、AGPL、SSPL、BUSL、単独GPL系を停止 | 直接変更なし | `apps/web` | 2026-07-21 |
 | CriteriaForge visual direction v1 | AI生成の設計参考画像 | OpenAI ImageGen | 2026-07-21 | 本プロジェクト用生成物 | 実装時に構成、色、質感を再解釈 | `docs/design/criteriaforge-visual-direction-v1.png` | 2026-07-21 |
+| Remotion | 動画生成基盤 | https://www.remotion.dev/ | 4.0.495 | Remotion Free License。提出者が個人である現状の資格条件を確認済み。MITではないため版・提出主体変更時は再確認 | 実画面、字幕、音声をフレーム駆動の映像へ構成 | `video/criteriaforge` | 2026-07-21 |
+| CriteriaForge実画面11枚 | 画面素材 | 本リポジトリの公開体験版・端末内自己試験 | 2026-07-21収録 | 本プロジェクトが生成した架空データの画面 | 切り抜き、拡大、注釈、動きの付与 | 端末内限定の`output/criteriaforge-demo/`から動画へ使用 | 2026-07-21 |
+| macOS音声「Daniel」 | 英語合成音声 | macOS `say` | 収録端末の搭載版 | **未確認**。Apple公式の版別ソフトウェア利用許諾に、合成音声出力の公開利用を明示する条項を確認できていない | 英語台本を読み上げ | 現在の確認用動画の音声 | 2026-07-21 |
+
+## 動画素材の公開可否
+
+- 映像、字幕、台本、画面素材は本プロジェクト由来で、第三者の画像、映像、音楽、書体ファイルは追加していない。
+- Remotion 4.0.495は、提出者が個人である現状ではFree Licenseの対象と確認した。これは法的助言ではなく、導入時点の条件確認記録である。
+- macOSの合成音声は公開利用条件を一次資料から確定できていない。現在の書き出しは本人確認用・編集確認用とし、YouTubeで一般公開する前に、本人が録音した同一台本の音声、または公開利用条件を確認できる音声へ差し替える。
+- 日本語訳は`output/criteriaforge-demo/criteriaforge-narration-ja.md`だけに保存し、Git、Devpost、README、公開動画説明へ含めない。
