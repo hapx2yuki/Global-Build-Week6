@@ -1,8 +1,8 @@
 # Demo Video Script
 
-Review render duration: 2:37.845. Hard limit: under 3:00. English voice, burned-in English captions, and a matching `.srt` sidecar.
+Final render duration: 2:37.845. Hard limit: under 3:00. English voice, burned-in English captions, and a matching `.srt` sidecar.
 
-The review film is rendered from the versioned Remotion source in `video/criteriaforge/`. Every product screen comes from the public FounderBrief replay or the separate live local self-test. Local captures and narration are intentionally excluded from the repository. Replace the temporary macOS synthetic voice with the creator's recording, or another narration source with verified public-use terms, before the public YouTube upload.
+The final film is rendered from the versioned Remotion source in `video/criteriaforge/`. Every product screen comes from the public FounderBrief replay or the separate live local self-test. Local captures and narration are intentionally excluded from the repository. The creator approved the current English narration as the final submission audio on July 21, 2026.
 
 ## 0:00–0:13 — The authority problem
 
@@ -65,6 +65,6 @@ The review film is rendered from the versioned Remotion source in `video/criteri
 - [x] Text and burned-in captions are readable at 1080p.
 - [x] Audio and captions explicitly name Codex and GPT‑5.6.
 - [x] Exported duration is under 180 seconds.
-- [ ] Narration source has verified public-use terms or is recorded by the creator.
+- [x] The creator approved the current English narration as the final submission audio.
 - [ ] YouTube visibility is Public.
 - [ ] Playback and every linked URL work while logged out on another device.

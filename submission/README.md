@@ -8,7 +8,7 @@
 make setup
 ```
 
-`metadata.example.env` から、Git に含まれない `metadata.env` が作成される。URL、Session ID、公開確認などは `metadata.env` だけに記入する。
+`metadata.example.env` から、Git に含まれない `metadata.env` が作成される。URL、Session ID、最終音声の承認、公開確認などは `metadata.env` だけに記入する。
 
 ## 文書の役割
 
@@ -24,4 +24,3 @@ make submission-check
 ```
 
 この検査が成功しても、最新の Devpost 画面と Official Rules を目視で再確認する。
-
