@@ -92,6 +92,7 @@ if [[ -n "${DEMO_DURATION_SECONDS:-}" ]]; then
 fi
 
 require_true REPOSITORY_ACCESS_CONFIRMED
+require_true FINAL_AUDIO_APPROVED
 require_true DEMO_PUBLIC
 require_true README_COMPLETE
 require_true REPOSITORY_TESTED
@@ -129,4 +130,3 @@ if [[ "$errors" -gt 0 ]]; then
 fi
 
 printf 'Submission check passed. Recheck the live Devpost form before submitting.\n'
-

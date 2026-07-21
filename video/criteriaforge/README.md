@@ -2,7 +2,7 @@
 
 This folder contains the versioned Remotion source for the OpenAI Build Week demo film.
 
-The film uses only captured CriteriaForge screens, the time-checked English narration draft, and locally generated captions. It does not claim a live model call where the public product replays recorded results. The current macOS synthetic voice is for review only and must be replaced with a narration source whose public-use terms are verified before public upload.
+The film uses only captured CriteriaForge screens, the creator-approved final English narration, and locally generated captions. It does not claim a live model call where the public product replays recorded results. The creator approved the current narration for the submission on July 21, 2026.
 
 ## Render
 
