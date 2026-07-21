@@ -14,6 +14,7 @@ Public proof:
 - Demo: [https://criteriaforge.vercel.app](https://criteriaforge.vercel.app)
 - Video: [https://youtu.be/Y1xxjB92r7Q](https://youtu.be/Y1xxjB92r7Q) — public, 2:38, audio names Codex and GPT‑5.6
 - Repository: [https://github.com/hapx2yuki/Global-Build-Week6](https://github.com/hapx2yuki/Global-Build-Week6)
+- Source release: [v0.1.0](https://github.com/hapx2yuki/Global-Build-Week6/releases/tag/v0.1.0)
 - Devpost: [https://devpost.com/software/global-build-week-6](https://devpost.com/software/global-build-week-6)
 - Final submission Pull Request: [#11](https://github.com/hapx2yuki/Global-Build-Week6/pull/11)
 
