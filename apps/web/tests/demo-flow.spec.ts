@@ -119,3 +119,22 @@ test("language switch and keyboard navigation stay usable", async ({ page }) => 
     page.getByRole("heading", { name: "判断の原典を、端末内へ集める" })
   ).toBeVisible()
 })
+
+test.describe("default interface language", () => {
+  test.use({ locale: "ja-JP" })
+
+  test("starts in English even when the browser language is Japanese", async ({
+    page,
+  }) => {
+    await page.goto("/")
+
+    await expect(
+      page.getByRole("heading", {
+        name: "Gather the sources that govern the product",
+      })
+    ).toBeVisible()
+    await expect(
+      page.getByRole("button", { name: "Change language to 日本語" })
+    ).toBeVisible()
+  })
+})
