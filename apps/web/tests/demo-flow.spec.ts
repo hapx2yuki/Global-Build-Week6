@@ -137,4 +137,23 @@ test.describe("default interface language", () => {
       page.getByRole("button", { name: "Change language to 日本語" })
     ).toBeVisible()
   })
+
+  test("restores a saved Japanese choice without a hydration error", async ({
+    page,
+  }) => {
+    const consoleErrors: string[] = []
+    page.on("console", (message) => {
+      if (message.type() === "error") consoleErrors.push(message.text())
+    })
+    await page.addInitScript(() => {
+      window.localStorage.setItem("criteriaforge.locale", "ja")
+    })
+
+    await page.goto("/")
+
+    await expect(
+      page.getByRole("heading", { name: "判断の原典を、端末内へ集める" })
+    ).toBeVisible()
+    expect(consoleErrors).toEqual([])
+  })
 })
