@@ -110,7 +110,7 @@ function initialLocale(): UiLocale {
   if (typeof window === "undefined") return "en"
   const stored = window.localStorage.getItem("criteriaforge.locale")
   if (stored === "en" || stored === "ja") return stored
-  return navigator.language.toLowerCase().startsWith("ja") ? "ja" : "en"
+  return "en"
 }
 
 const sectionTitles: Record<string, string> = {
