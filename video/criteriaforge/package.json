@@ -7,6 +7,7 @@
     "studio": "npm run assets && remotion studio src/index.ts",
     "render": "npm run assets && remotion render src/index.ts CriteriaForgeRich ../../output/criteriaforge-demo/criteriaforge-remotion.mp4 --codec=h264 --pixel-format=yuv420p --crf=18 --audio-bitrate=192k --concurrency=50%",
     "render:still": "npm run assets && remotion still src/index.ts CriteriaForgeRich ../../output/criteriaforge-demo/criteriaforge-remotion-poster.png --frame=84",
+    "render:thumbnail": "npm run assets && remotion still src/index.ts CriteriaForgeThumbnail ../../output/criteriaforge-demo/criteriaforge-youtube-thumbnail.jpg --image-format=jpeg --jpeg-quality=92",
     "check": "npm run assets && tsc --noEmit && remotion compositions src/index.ts",
     "license:check": "node scripts/check-licenses.mjs"
   },

@@ -12,8 +12,18 @@
 Public proof:
 
 - Demo: [https://criteriaforge.vercel.app](https://criteriaforge.vercel.app)
+- Video: [https://youtu.be/Y1xxjB92r7Q](https://youtu.be/Y1xxjB92r7Q) — public, 2:38, audio names Codex and GPT‑5.6
 - Repository: [https://github.com/hapx2yuki/Global-Build-Week6](https://github.com/hapx2yuki/Global-Build-Week6)
-- Pull Request: [#7](https://github.com/hapx2yuki/Global-Build-Week6/pull/7)
+- Devpost: [https://devpost.com/software/global-build-week-6](https://devpost.com/software/global-build-week-6)
+- Final submission Pull Request: [#11](https://github.com/hapx2yuki/Global-Build-Week6/pull/11)
+
+Submission verification:
+
+- Devpost submission ID: `1108857`
+- State returned after submission: `Submitted`
+- Submitted at: `2026-07-20T21:01:40.531-04:00`
+- Devpost project state now includes OpenAI Build Week with a non-null submission timestamp and the public video URL.
+- A separate unauthenticated retrieval environment opened the YouTube watch page with the correct title. Anonymous HTTP checks returned 200 for the Vercel demo and Devpost project; the public GitHub page exposed the MIT license and README without sign-in.
 
 ## Scored criteria
 
@@ -56,4 +66,4 @@ Public proof:
 - “AI evaluation is deterministic.”
 - “The post-repair FounderBrief result has been re-measured.”
 - “A live Codex repair was applied and re-evaluated end to end.”
-- Any public URL, video URL, Session ID, or Devpost state that has not been independently opened and confirmed.
+- Any future URL, Session ID, or submission-state claim that has not been independently opened and confirmed.

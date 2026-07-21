@@ -66,5 +66,5 @@ The final film is rendered from the versioned Remotion source in `video/criteria
 - [x] Audio and captions explicitly name Codex and GPT‑5.6.
 - [x] Exported duration is under 180 seconds.
 - [x] The creator approved the current English narration as the final submission audio.
-- [ ] YouTube visibility is Public.
-- [ ] Playback and every linked URL work while logged out on another device.
+- [x] YouTube visibility is Public: https://youtu.be/Y1xxjB92r7Q
+- [x] The public watch page and title were opened from a separate unauthenticated retrieval environment; the Vercel, GitHub, and Devpost URLs were also checked without submission credentials.

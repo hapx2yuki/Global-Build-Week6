@@ -21,6 +21,8 @@ output/criteriaforge-demo/criteriaforge-remotion.mp4
 
 Use `npm run studio` for a frame-accurate preview and `npm run render:still` for the poster frame.
 
+`npm run render:thumbnail` writes the deterministic 1280×720 YouTube thumbnail to `output/criteriaforge-demo/criteriaforge-youtube-thumbnail.jpg`. The thumbnail uses the same product screen, palette, editorial type, and human-authority visual grammar as the film.
+
 The captured screens, narration master, and rendered output intentionally stay in the ignored local `output/` area. A clean clone therefore needs those reviewed local inputs before it can render the film; the repository does not present the film as self-contained from source alone.
 
 Remotion 4.0.495 uses its own license rather than the repository's MIT License. `npm run license:check` verifies the reviewed version and the installed individual Free License wording. Reassess eligibility if the submitter type or Remotion version changes.
